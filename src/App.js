@@ -14,7 +14,7 @@ function App() {
           <Route path="/tutorial">
             <Tutorial/>
           </Route>
-          <Route>
+          <Route path="/">
             <LandingPage/>
           </Route>
         </Switch>
