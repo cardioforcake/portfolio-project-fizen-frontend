@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {useEffect, useState, useRef} from 'react';
+import Tutorial from './tutorial/Tutorial'
 
 function App() {
   return (
