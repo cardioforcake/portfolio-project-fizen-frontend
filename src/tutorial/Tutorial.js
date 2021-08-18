@@ -46,6 +46,18 @@ function Tutorial(props){
           <InputFive setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       )
+    case 6:
+      return(
+        <div>
+          <TutResults setTutSec={setTutSec} tutParams={tutParams}/>
+        </div>
+      )
+    case 7:
+      return(
+        <div>
+          <TutDetails setTutSec={setTutSec} />
+        </div>
+      )
     default:
       return(
         <div>
