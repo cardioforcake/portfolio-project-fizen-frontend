@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
-import { CssBaseline } from '@material-ui/core';
+import { Avatar, Button, Container, CssBaseline, Grid } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
 import Tutorial from './tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
@@ -31,38 +31,46 @@ function App() {
   return (
     <div>
       <CssBaseline />
-      <BrowserRouter>
-        <header>
-          Team Awesome App | user: {user?.name}<br />
-          <Link to="/">landingPage</Link>--
-          <Link to="/tutorial">tutorial</Link>--
-          <Link to="/login">login</Link>--
-          <Link to="/dashboard">dashboard</Link>
-        </header>
-        <hr />
-        <Switch>
-          <Route path="/tutorial">
-            <Tutorial/>
-          </Route>
-          <Route path="/login">
-            <LoginPage
-              user={user}
-              setUser={setUser}
-              loadGoals={loadGoals}
-            />
-          </Route>
-          <Route path="/dashboard">
-            <DashboardPage
-              user={user}
-              goals={goals}
-              setGoals={setGoals}
-            />
-          </Route>
-          <Route path="/">
-            <LandingPage/>
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Container maxWidth="sm">
+        <BrowserRouter>
+          <Grid container justifyContent="space-between" direction="row" space={2}>
+            <Grid item>
+              <Link to="/"><Button variant="contained">Home</Button></Link>
+            </Grid>
+            {
+              user ?
+                <Grid item>
+                  <Link to="/dashboard">
+                    <Button variant="contained">Dashboard: {user?.name}</Button>
+                  </Link>
+                </Grid>
+              : null
+            }
+          </Grid>
+          <Switch>
+            <Route path="/tutorial">
+              <Tutorial/>
+            </Route>
+            <Route path="/login">
+              <LoginPage
+                user={user}
+                setUser={setUser}
+                loadGoals={loadGoals}
+              />
+            </Route>
+            <Route path="/dashboard">
+              <DashboardPage
+                user={user}
+                goals={goals}
+                setGoals={setGoals}
+              />
+            </Route>
+            <Route path="/">
+              <LandingPage/>
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </Container>
     </div>
   );
 }
