@@ -14,6 +14,7 @@ export default function LoginPage(props){
 
     if (user) {
       props.setUser(user);
+      props.loadGoals();
       setMessage("");
     } else {
       setMessage(message);
