@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setToken, withTokenHeaders } from './token-service';
 
 const ENDPOINT = 'http://localhost:3001/users';
 
@@ -16,7 +17,7 @@ export async function login(credentials) {
   try {
     const response = await axios.post(ENDPOINT + "/login", credentials);
 
-    window.localStorage.setItem("token", response.data.token);
+    setToken(response.data.token);
     return { user: response.data.user };
   } catch(err) {
     console.log(err);
@@ -26,11 +27,7 @@ export async function login(credentials) {
 
 export async function verifyToken() {
   try {
-    await axios.get(ENDPOINT + "/verify", { 
-      headers: {
-        "Authorization": window.localStorage.getItem("token")
-      }
-    });
+    await axios.get(ENDPOINT + "/verify", withTokenHeaders());
 
     return true;
   } catch(err) {
