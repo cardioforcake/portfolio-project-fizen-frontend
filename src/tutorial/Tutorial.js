@@ -31,7 +31,7 @@ function Tutorial(props){
     case 3:
       return(
         <div>
-          <InputThree setTutSec={setTutSec} setTutParams={setTutParams}/>
+          <InputThree setTutSec={setTutSec} setTutParams={setTutParams} tutParams={tutParams}/>
         </div>
       );
     case 4:

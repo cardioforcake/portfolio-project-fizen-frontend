@@ -23,13 +23,24 @@ function updateTarget(value, setParams){
   })
 }
 
-function updateTimeH(value, setParams){
-  let target = new Date()
-  
+function updateTimeY(value, setParams){
   setParams(prev=>{
+    let newDate = new Date(prev.targetDate)
+    newDate.setYear(Number(value))
     return{
       ...prev,
-      timeHorizon: Number(value)
+      targetDate: newDate
+    }
+  })
+}
+
+function updateTimeM(value, setParams){
+  setParams(prev=>{
+    let newDate = new Date(prev.targetDate)
+    newDate.setMonth(Number(value))
+    return{
+      ...prev,
+      targetDate: newDate
     }
   })
 }
@@ -75,10 +86,25 @@ function InputTwo(props){
 }
 
 function InputThree(props){
+  let daysInMonth = [31, 28, 31,]
+  let today = new Date()
+  let yearOptions = []
+  for(let i=0; i<76; i++){
+    yearOptions.push(<option value={`${today.getFullYear()+i}`}>{today.getFullYear()+i}</option>)
+  }
+  let monthOptions = []
+  for(let i=0; i< 12; i++ ){
+    monthOptions.push(<option value={`${i}`}>{i}</option>)
+  }
   return(
     <div>
       How many years from now would you like to reach this goal?
-      <input type="number" onChange={(e)=>updateTimeH(e.target.value, props.setTutParams)}/>
+      <select onChange={(e)=>updateTimeY(e.target.value, props.setTutParams)}>
+        {yearOptions}
+      </select>
+      <select onChange={(e)=>updateTimeM(e.target.value, props.setTutParams)}>
+        {monthOptions}
+      </select>
       <Button onClick={()=>nextTut(props.setTutSec)}>Next</Button>
     </div>
   )
