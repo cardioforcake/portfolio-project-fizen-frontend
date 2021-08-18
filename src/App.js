@@ -7,6 +7,8 @@ import LoginPage from './components/LoginPage/LoginPage';
 import {CssBaseline} from '@material-ui/core';
 
 function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <div>
       <CssBaseline />
@@ -18,7 +20,7 @@ function App() {
             <Tutorial/>
           </Route>
           <Route path="/login">
-            <LoginPage />
+            <LoginPage user={user} setUser={setUser}/>
           </Route>
           <Route path="/">
             <LandingPage/>
