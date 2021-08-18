@@ -7,7 +7,7 @@ import TutResults from './components/TutResults/TutResults';
 
 function Tutorial(props){
   const [tutSec, setTutSec] = useState(1)
-  const [tutParams, setTutParas] = useState({
+  const [tutParams, setTutParams] = useState({
     title: '',
     targetAmount: 0,
     targetDate: new Date(),
@@ -19,37 +19,37 @@ function Tutorial(props){
     case 1:
       return(
         <div>
-          <InputOne tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputOne setTutSec={setTutSec} setTutParams={setTutParams} tutParams={tutParams}/>
         </div>
       );
     case 2:
       return(
         <div>
-          <InputTwo tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputTwo setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       );
     case 3:
       return(
         <div>
-          <InputThree tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputThree setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       );
     case 4:
       return(
         <div>
-          <InputFour tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputFour setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       );
     case 5:
       return(
         <div>
-          <InputFive tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputFive setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       )
     default:
       return(
         <div>
-          <InputOne tutSec={tutSec} setTutSec={setTutSec}/>
+          <InputOne setTutSec={setTutSec} setTutParams={setTutParams}/>
         </div>
       );
   }
