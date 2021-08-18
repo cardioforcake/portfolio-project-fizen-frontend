@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { register, login, verifyToken } from '../../utils/users-api';
+import { createGoal, getAllGoals } from '../../utils/goals-api';
 
 export default function LoginPage(props){
   const [formData, setFormData] = useState({ name: "", password: "" });
@@ -61,6 +62,21 @@ export default function LoginPage(props){
                                                  : setMessage("Token Invalid."))}
         >
           Verify
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={async () => {
+            console.log(await createGoal({
+              title: "car",
+              targetDate: "2020-10-10",
+              targetAmount: 2000,
+              currentAmount: 50,
+              riskTolerance: 3,
+            }));
+          }}
+        >
+          TEST GOAL
         </Button>
       </form>
     </div>
