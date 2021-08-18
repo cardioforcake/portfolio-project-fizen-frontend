@@ -1,17 +1,30 @@
 import './App.css';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
-import { Avatar, Button, Container, CssBaseline, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Button, Container, CssBaseline, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
 import Tutorial from './tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DashboardPage from './components/DashboardPage/DashboardPage';
 
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    marginBottom: theme.spacing(4),
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+  }
+}));
+
 function App() {
   const [user, setUser] = useState(null);
   const [goals, setGoals] = useState([]);
   const [message, setMessage] = useState("");
+
+  const classes = useStyles();
 
   // TODO perhaps this should be in a sync-service?
   async function loadGoals() {
@@ -31,22 +44,24 @@ function App() {
   return (
     <div>
       <CssBaseline />
-      <Container maxWidth="sm">
         <BrowserRouter>
-          <Grid container justifyContent="space-between" direction="row" space={2}>
-            <Grid item>
-              <Link to="/"><Button variant="contained">Home</Button></Link>
-            </Grid>
+          <AppBar className={classes.appBar} position="static">
+            <Toolbar className={classes.toolbar}>
+              <Link to="/">
+                <Button variant="contained" color="primary">Home</Button>
+              </Link>
             {
               user ?
-                <Grid item>
-                  <Link to="/dashboard">
-                    <Button variant="contained">Dashboard: {user?.name}</Button>
-                  </Link>
-                </Grid>
+                <Link to="/dashboard">
+                  <Button variant="contained" color="primary">
+                    Dashboard: {user?.name}
+                  </Button>
+                </Link>
               : null
             }
-          </Grid>
+            </Toolbar>
+          </AppBar>
+          <Container maxWidth="sm">
           <Switch>
             <Route path="/tutorial">
               <Tutorial/>
@@ -69,8 +84,8 @@ function App() {
               <LandingPage/>
             </Route>
           </Switch>
-        </BrowserRouter>
-      </Container>
+        </Container>
+      </BrowserRouter>
     </div>
   );
 }
