@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
-import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk} from '../../utils/util-functions.js'
+import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP} from '../../utils/update-functions.js'
+import {calcCSP} from '../../utils/calc-functions.js'
 
 function InputOne(props){
   return(
@@ -70,7 +71,7 @@ function InputFive(props){
         <option value="4">Medium to High</option>
         <option value="5">High</option>
       </select>
-      <Button onClick={()=>nextTut(props.setTutSec)}>Next</Button>
+      <Button onClick={()=>{nextTut(props.setTutSec); updateCSP(props.tutParams, props.setTutParams)}}>Next</Button>
     </div>
   )
 }

@@ -12,7 +12,8 @@ function Tutorial(props){
     targetAmount: 0,
     targetDate: new Date(),
     currentAmount: 0,
-    riskTolerance: 3 
+    riskTolerance: 3,
+    cspAmount: 0,
   })
 
   switch(tutSec){
@@ -43,19 +44,19 @@ function Tutorial(props){
     case 5:
       return(
         <div>
-          <InputFive setTutSec={setTutSec} setTutParams={setTutParams}/>
+          <InputFive setTutSec={setTutSec} tutParams={tutParams}  setTutParams={setTutParams}/>
         </div>
       )
     case 6:
       return(
         <div>
-          <TutResults setTutSec={setTutSec} tutParams={tutParams}/>
+          <TutResults setTutSec={setTutSec} tutParams={tutParams} setTutParams={setTutParams}/>
         </div>
       )
     case 7:
       return(
         <div>
-          <TutDetails setTutSec={setTutSec} />
+          <TutDetails setTutSec={setTutSec} tutParams={tutParams}/>
         </div>
       )
     default:

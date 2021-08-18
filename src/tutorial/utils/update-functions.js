@@ -1,3 +1,5 @@
+import {calcCSP} from './calc-functions.js'
+
 function nextTut(setSection){
   setSection(prev=>{return prev+1})
 }
@@ -60,4 +62,14 @@ function updateRisk(value, setParams){
   })
 }
 
-export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk}
+function updateCSP(params, setParams){
+  let csp = calcCSP(params)
+  setParams(prev=>{
+    return{
+      ...prev,
+      cspAmount: csp
+    }
+  })
+}
+
+export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP}
