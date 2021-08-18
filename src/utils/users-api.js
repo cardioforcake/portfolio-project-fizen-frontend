@@ -6,9 +6,9 @@ export async function register(credentials) {
   try {
     const response = await axios.post(ENDPOINT, credentials);
 
-    console.log(response.data.user);
+    return { user: response.data.user, message: response.data.message };
   } catch(err) {
-    console.log(err);
+    return { user: null, message: err.response?.data?.message };
   }
 }
 
@@ -16,10 +16,11 @@ export async function login(credentials) {
   try {
     const response = await axios.post(ENDPOINT + "/login", credentials);
 
-    console.log(response.data.token);
     window.localStorage.setItem("token", response.data.token);
+    return { user: response.data.user };
   } catch(err) {
     console.log(err);
+    return { user: null, message: err.response?.data?.message };
   }
 }
 
@@ -31,9 +32,7 @@ export async function verifyToken() {
       }
     });
 
-    console.log("Token is valid.");
     return true;
-
   } catch(err) {
     return false;
   }

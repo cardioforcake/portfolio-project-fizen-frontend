@@ -5,20 +5,37 @@ import { register, login, verifyToken } from '../../utils/users-api';
 
 export default function LoginPage(props){
   const [formData, setFormData] = useState({ name: "", password: "" });
+  const [message, setMessage] = useState("");
 
   async function handleLogin(e) {
     e.preventDefault();
-    login(formData);
+    const { user, message } = await login(formData);
+
+    if (user) {
+      props.setUser(user);
+      setMessage("");
+    } else {
+      setMessage(message);
+    }
   }
 
   async function handleRegister(e) {
     e.preventDefault();
-    register(formData);
+    const { user, message } = await register(formData);
+
+    if (user) {
+      props.setUser(user);
+      setMessage("");
+    } else {
+      setMessage(message);
+    }
   }
 
   return(
     <div>
       <h1>LoginPage</h1>
+      user: {props.user?.name}<br/>
+      message: {message}<br/>
       <form
         autoComplete="off"
         onSubmit={handleLogin}
@@ -36,7 +53,15 @@ export default function LoginPage(props){
         />
         <Button variant="contained" color="primary" onClick={handleLogin}>Login</Button>
         <Button variant="contained" color="primary" onClick={handleRegister}>Register</Button>
-        <Button variant="contained" color="primary" onClick={() => verifyToken()}>Verify</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => verifyToken()
+                          .then(result => result ? setMessage("Token Valid.")
+                                                 : setMessage("Token Invalid."))}
+        >
+          Verify
+        </Button>
       </form>
     </div>
   );
