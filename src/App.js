@@ -36,6 +36,16 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [message, setMessage] = useState("");
 
+  const [dummyGoal, setDummyGoal]=useState([{
+    title: 'Dummy',
+    targetAmount: 150000,
+    targetDate: new Date('2041-08-19'),
+    currentAmount: 5000,
+    riskTolerance: 3,
+    cspAmount: 288,
+    progress: 1
+  }])
+
   const classes = useStyles();
 
   // TODO perhaps this should be in a sync-service?
@@ -94,6 +104,7 @@ function App() {
                   user={user}
                   goals={goals}
                   setGoals={setGoals}
+                  dummy={dummyGoal}
                 />
               </Route>
               <Route path="/">

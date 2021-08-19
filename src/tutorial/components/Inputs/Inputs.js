@@ -25,22 +25,23 @@ function InputTwo(props){
 
 function InputThree(props){
   let today = new Date()
+  let monthIdx=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   let yearOptions = []
   for(let i=0; i<76; i++){
     yearOptions.push(<option value={`${today.getFullYear()+i}`} key={i}>{today.getFullYear()+i}</option>)
   }
   let monthOptions = []
   for(let i=0; i< 12; i++ ){
-    monthOptions.push(<option value={`${i}`} key={i}>{i}</option>)
+    monthOptions.push(<option value={monthIdx[i]} key={i}>{monthIdx[i]}</option>)
   }
   return(
     <div>
       How many years from now would you like to reach this goal?
-      <Select onChange={(e)=>updateTimeY(e.target.value, props.setTutParams)}>
-        {yearOptions}
-      </Select>
-      <Select onChange={(e)=>updateTimeM(e.target.value, props.setTutParams)}>
+      <Select defaultValue={monthIdx[today.getMonth()]} onChange={(e)=>updateTimeM(e.target.value, props.setTutParams)}>
         {monthOptions}
+      </Select>
+      <Select defaultValue={today.getFullYear()} onChange={(e)=>updateTimeY(e.target.value, props.setTutParams)}>
+        {yearOptions}
       </Select>
       <Button onClick={()=>nextTut(props.setTutSec)}>Next</Button>
     </div>
@@ -62,7 +63,7 @@ function InputFive(props){
     <div>
       In order to help you reach your goal faster, you want your savings to be invested.
       What level of risk are you willing to take?
-      <Select onChange={(e)=>updateRisk(e.target.value, props.setTutParams)}>
+      <Select defaultValue={"3"} onChange={(e)=>updateRisk(e.target.value, props.setTutParams)}>
         <option value="1">Low</option>
         <option value="2">Low to Medium</option>
         <option value="3">Medium</option>
