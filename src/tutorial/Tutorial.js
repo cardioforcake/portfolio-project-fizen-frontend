@@ -70,7 +70,13 @@ function Tutorial(props){
     case 8:
       return(
         <div>
-          <Registration tutParams={tutParams} tutProgress={tutProgress}/>
+          <Registration
+            history={props.history}
+            tutParams={tutParams}
+            tutProgress={tutProgress}
+            setUser={props.setUser}
+            setGoals={props.setGoals}
+          />
         </div>
       )
     default:
