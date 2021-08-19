@@ -1,4 +1,4 @@
-import {calcCSP} from './calc-functions.js'
+import {calcCSP, calcNewCSP, calcProgress} from './calc-functions.js'
 
 function nextTut(setSection){
   setSection(prev=>{return prev+1})
@@ -72,9 +72,27 @@ function updateCSP(params, setParams){
   })
 }
 
-function updateProgress(value, setProgress){
-  setProgress((value+50)/100)
-  console.log(value)
+function changeCSP(value, setParams){
+  setParams(prev=>{
+    return{
+      ...prev,
+      cspAmount: value
+    }
+  })
 }
 
-export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP,updateProgress}
+function updateProgress(value, setProgress, params, setParams){
+  setProgress(value)
+  // console.log(calcNewCSP(params, value))
+  // console.log(calcProgress(params, calcNewCSP(params, value)))
+  if(calcNewCSP(params, value)!== params.cspAmount){
+    setParams(prev=>{
+      return{
+        ...prev,
+        cspAmount: calcNewCSP(params, value)
+      }
+    })
+  }
+}
+
+export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP,updateProgress, changeCSP}

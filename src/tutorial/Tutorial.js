@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {InputOne, InputTwo, InputThree, InputFour, InputFive} from './components/Inputs/Inputs';
 import TutDetails from './components/TutDetails/TutDetails';
 import TutResults from './components/TutResults/TutResults';
+import Registration from './components/Registration/Registration';
 
 
 function Tutorial(props){
@@ -64,6 +65,12 @@ function Tutorial(props){
             tutProgress={tutProgress}
             setTutProgress={setTutProgress}
           />
+        </div>
+      )
+    case 8:
+      return(
+        <div>
+          <Registration tutParams={tutParams} tutProgress={tutProgress}/>
         </div>
       )
     default:
