@@ -72,4 +72,9 @@ function updateCSP(params, setParams){
   })
 }
 
-export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP}
+function updateProgress(value, setProgress){
+  setProgress((value+50)/100)
+  console.log(value)
+}
+
+export {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP,updateProgress}

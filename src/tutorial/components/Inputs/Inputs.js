@@ -29,11 +29,11 @@ function InputThree(props){
   let today = new Date()
   let yearOptions = []
   for(let i=0; i<76; i++){
-    yearOptions.push(<option value={`${today.getFullYear()+i}`}>{today.getFullYear()+i}</option>)
+    yearOptions.push(<option value={`${today.getFullYear()+i}`} key={i}>{today.getFullYear()+i}</option>)
   }
   let monthOptions = []
   for(let i=0; i< 12; i++ ){
-    monthOptions.push(<option value={`${i}`}>{i}</option>)
+    monthOptions.push(<option value={`${i}`} key={i}>{i}</option>)
   }
   return(
     <div>

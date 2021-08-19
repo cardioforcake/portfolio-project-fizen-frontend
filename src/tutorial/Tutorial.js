@@ -15,6 +15,7 @@ function Tutorial(props){
     riskTolerance: 3,
     cspAmount: 0,
   })
+  const[tutProgress, setTutProgress] = useState(1)
 
   switch(tutSec){
     case 1:
@@ -56,7 +57,13 @@ function Tutorial(props){
     case 7:
       return(
         <div>
-          <TutDetails setTutSec={setTutSec} tutParams={tutParams}/>
+          <TutDetails 
+            setTutSec={setTutSec} 
+            tutParams={tutParams} 
+            setTutParams={setTutParams} 
+            tutProgress={tutProgress}
+            setTutProgress={setTutProgress}
+          />
         </div>
       )
     default:
