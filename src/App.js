@@ -1,10 +1,12 @@
 import './App.css';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { useHistory, BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Container, createTheme, CssBaseline, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
 import { verifyToken } from './utils/users-api';
+import { setToken } from './utils/token-service';
+import LogoutButton from './components/LogoutButton/LogoutButton';
 import Tutorial from './components/Tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   }
 }));
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -64,6 +67,14 @@ function App() {
     }
   };
 
+  async function logout() {
+    await Promise.all([
+      setUser(null),
+      setGoals([]),
+      setToken(""),
+    ]);
+  }
+
   useEffect(() => {
     (async () => {
       const { user, message } = await verifyToken();
@@ -87,11 +98,14 @@ function App() {
               </Link>
               {
                 user ?
-                  <Link to="/dashboard">
-                    <Button variant="contained" color="primary">
-                      Dashboard: {user?.name}
-                    </Button>
-                  </Link>
+                  <div>
+                    <LogoutButton logout={logout}/>
+                    <Link to="/dashboard">
+                      <Button variant="contained" color="primary">
+                        Dashboard: {user?.name}
+                      </Button>
+                    </Link>
+                  </div>
                   : null
               }
             </Toolbar>
