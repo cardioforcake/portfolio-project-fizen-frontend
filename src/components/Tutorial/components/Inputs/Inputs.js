@@ -1,5 +1,5 @@
 import { Button, Input, Select } from '@material-ui/core';
-import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP} from '../../utils/update-functions.js'
+import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP} from '../../../../utils/update-functions.js'
 
 function InputOne(props){
   return(

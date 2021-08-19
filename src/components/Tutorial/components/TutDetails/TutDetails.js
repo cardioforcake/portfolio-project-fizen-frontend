@@ -1,6 +1,6 @@
 import { Button, Slider, Input, Select } from '@material-ui/core';
-import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../utils/update-functions.js'
-import {calcCSP, calcProgress, calcNewCSP} from '../../utils/calc-functions.js'
+import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
+import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
 import styles from './TutDetails.module.css'
 import { useEffect, useState } from 'react';
 

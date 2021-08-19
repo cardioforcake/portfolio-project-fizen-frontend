@@ -1,5 +1,4 @@
 import {useEffect, useState, useRef} from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {InputOne, InputTwo, InputThree, InputFour, InputFive} from './components/Inputs/Inputs';
 import TutDetails from './components/TutDetails/TutDetails';
 import TutResults from './components/TutResults/TutResults';

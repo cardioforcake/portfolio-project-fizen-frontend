@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Container, createTheme, CssBaseline, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
-import Tutorial from './tutorial/Tutorial';
+import Tutorial from './components/Tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DashboardPage from './components/DashboardPage/DashboardPage';

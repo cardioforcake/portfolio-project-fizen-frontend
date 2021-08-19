@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
-import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP} from '../../utils/update-functions.js'
-import {calcCSP} from '../../utils/calc-functions.js'
+import {nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP} from '../../../../utils/update-functions.js'
+import {calcCSP} from '../../../../utils/calc-functions.js'
 
 function TutResults(props){
   // let csp = calcCSP(props.tutParams)
