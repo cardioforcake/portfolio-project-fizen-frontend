@@ -1,19 +1,21 @@
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import {ExitToApp} from '@material-ui/icons';
 
 export default function LogoutButton({ logout }) {
   const history = useHistory();
 
   return (
-    <Button
+    <IconButton
       variant="contained"
       color="primary"
+      component="span"
       onClick={() => {
         history.push('/');
         logout();
       }}
     >
-      Logout
-    </Button>
+      <ExitToApp fontSize="large"/>
+    </IconButton>
   );
 }

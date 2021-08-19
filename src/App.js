@@ -2,7 +2,7 @@ import './App.css';
 import { useHistory, BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, ButtonGroup, Container, createTheme, CssBaseline, Grid, ThemeProvider, Toolbar } from '@material-ui/core';
+import { AppBar, Button, IconButton, Container, createTheme, CssBaseline, Grid, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
 import { verifyToken } from './utils/users-api';
 import { setToken } from './utils/token-service';
@@ -11,6 +11,7 @@ import Tutorial from './components/Tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DashboardPage from './components/DashboardPage/DashboardPage';
+import {AccountCircle} from '@material-ui/icons';
 
 const theme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     marginBottom: theme.spacing(4),
     backgroundColor: '#edf2f4',
+    height: '60px'
   },
   toolbar: {
     display: "flex",
@@ -100,15 +102,15 @@ function App() {
               {
                 user ?
                   <div>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={1}>
                       <Grid item>
                         <LogoutButton logout={logout}/>
                       </Grid>
                       <Grid item>
                         <Link to="/dashboard">
-                          <Button variant="contained" color="primary">
-                            Dashboard: {user?.name}
-                          </Button>
+                          <IconButton color="primary" component="span">
+                            <AccountCircle fontSize="large" />
+                          </IconButton>
                         </Link>
                       </Grid>
                     </Grid>

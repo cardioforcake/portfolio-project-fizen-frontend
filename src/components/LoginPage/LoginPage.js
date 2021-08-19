@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -26,15 +27,17 @@ export default function LoginPage(props){
   const [message, setMessage] = useState("");
 
   const classes = useStyles();
+  const history = useHistory();
 
   async function handleLogin(e) {
     e.preventDefault();
     const { user, message } = await login(formData);
 
     if (user) {
-      props.setUser(user);
-      props.loadGoals();
+      await props.setUser(user);
+      await props.loadGoals();
       setMessage("");
+      history.push('/dashboard');
     } else {
       setMessage(message);
     }
