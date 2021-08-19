@@ -1,24 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, List, ListItem, Typography, Card } from '@material-ui/core';
 import GoalDetails from './components/GoalDetails/GoalDetails'
-
+import GoalThumbNail from './components/GoalThumbNail/GoalThumbNail'
 
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
+  const [goalDisplayed, setGoalDisplayed] = useState(0)
+  const [goalMap, setGoalMap] = useState([])
+  // const [zoomedGoal, setZoomedGoal] = useState(null)
+  // useEffect(()=>{
+  //   let mapped = props.goals.map((goal,idx)=>{
+  //     return (
+  //       <GoalThumbNail
+  //         goal={props.goals[idx]}
+  //       />
+  //     )
+  //   })
+  // })
 
-  if(!goalSelected){
+  if(goalSelected===null){
     return(
       <div>
-        <Card onClick={()=>{setGoalSelected(0)}}>
-          <p>{props.dummyGoal[0].title}</p>
-        </Card>
+        <GoalThumbNail
+          goal={props.goals[goalDisplayed]}
+          progress={props.goals[goalDisplayed].progess}
+          title={props.goals[goalDisplayed].title}
+          setGoalSelected={setGoalSelected}
+        />
+        <p>{props.goals[goalDisplayed].progress}</p>
+        <p>{props.goals[goalDisplayed].targetDate}</p>
+        {/* <Card onClick={()=>{setGoalSelected(0)}}>
+          <p>{props.goals[0].title}</p>
+        </Card> */}
       </div>
     )
   }else{
     return(
       <div>
         <GoalDetails
-          goal={props.dummyGoal[goalSelected]}
+          goal={props.goals[goalSelected]}
+          setGoalSelect={setGoalSelected}
         />
       </div>
     )
@@ -26,7 +47,7 @@ function DashboardPage(props) {
   // return (
   //   <div>
 
-  //     {/* {zoomedGoal ?
+  //     {zoomedGoal ?
   //       <div>
   //         <Button onClick={() => setZoomedGoal(null)}>return to goals</Button>
   //         <Typography variant="h6">{zoomedGoal.title}</Typography>
@@ -59,7 +80,7 @@ function DashboardPage(props) {
   //           }
   //         </List>
   //       </div>
-  //     } */}
+  //     }
   //   </div>
   // );
 }
