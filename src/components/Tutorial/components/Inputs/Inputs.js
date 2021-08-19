@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { Button, Grid, Input, Select, Typography } from '@material-ui/core';
-import { nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk}
+import { nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP }
   from '../../../../utils/update-functions.js';
 
 
@@ -99,7 +100,7 @@ function InputThree(props){
         <div>
           <Select
             defaultValue={monthIdx[today.getMonth()]}
-            onChange={(e) => updateTimeM(e.target.value, props.setTutParams)}
+            onChange={(e) => updateTimeM(monthIdx.indexOf(e.target.value), props.setTutParams)}
           >
             {monthOptions}
           </Select>
@@ -157,6 +158,11 @@ function InputFive(props){
 }
 
 function TutResults(props){
+  useEffect(() => {
+    console.log(props.tutParams);
+    updateCSP(props.tutParams, props.setTutParams);
+  }, []);
+
   return(
     <TutorialStep
       setTutSec={props.setTutSec}

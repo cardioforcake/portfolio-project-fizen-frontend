@@ -27,10 +27,10 @@ export async function login(credentials) {
 
 export async function verifyToken() {
   try {
-    await axios.get(ENDPOINT + "/verify", withTokenHeaders());
+    const response = await axios.get(ENDPOINT + "/verify", withTokenHeaders());
 
-    return true;
+    return { user: response.data.user, message: response.data.message };
   } catch(err) {
-    return false;
+    return { user: null, message: err.response?.data?.message };
   }
 }

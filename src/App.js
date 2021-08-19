@@ -1,13 +1,17 @@
 import './App.css';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { useHistory, BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, Container, createTheme, CssBaseline, ThemeProvider, Toolbar } from '@material-ui/core';
+import { AppBar, Button, IconButton, Container, createTheme, CssBaseline, Grid, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
+import { verifyToken } from './utils/users-api';
+import { setToken } from './utils/token-service';
+import LogoutButton from './components/LogoutButton/LogoutButton';
 import Tutorial from './components/Tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DashboardPage from './components/DashboardPage/DashboardPage';
+import {AccountCircle} from '@material-ui/icons';
 
 const theme = createTheme({
   palette: {
@@ -24,12 +28,15 @@ const theme = createTheme({
 const useStyles = makeStyles((theme) => ({
   appBar: {
     marginBottom: theme.spacing(4),
+    backgroundColor: '#edf2f4',
+    height: '60px'
   },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
   }
 }));
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,6 +70,25 @@ function App() {
     }
   };
 
+  async function logout() {
+    await Promise.all([
+      setUser(null),
+      setGoals([]),
+      setToken(""),
+    ]);
+  }
+
+  useEffect(() => {
+    (async () => {
+      const { user, message } = await verifyToken();
+      console.log(user);
+      if (user) {
+        setUser(user);
+        loadGoals();
+      }
+    })();
+  }, []);
+
   return (
     <div>
       <CssBaseline />
@@ -71,16 +97,28 @@ function App() {
           <AppBar className={classes.appBar} position="static">
             <Toolbar className={classes.toolbar}>
               <Link to="/">
-                <Button variant="contained" color="primary">Home</Button>
+                <img src="/fizen.svg" alt="logo" height="30px" />
               </Link>
               {
                 user ?
-                  <Link to="/dashboard">
-                    <Button variant="contained" color="primary">
-                      Dashboard: {user?.name}
-                    </Button>
+                  <div>
+                    <Grid container spacing={1}>
+                      <Grid item>
+                        <LogoutButton logout={logout}/>
+                      </Grid>
+                      <Grid item>
+                        <Link to="/dashboard">
+                          <IconButton color="primary" component="span">
+                            <AccountCircle fontSize="large" />
+                          </IconButton>
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </div>
+                  : 
+                  <Link to="/login">
+                    <Button variant="contained" color="primary">Login</Button>
                   </Link>
-                  : null
               }
             </Toolbar>
           </AppBar>
@@ -104,6 +142,7 @@ function App() {
                   user={user}
                   goals={goals}
                   setGoals={setGoals}
+                  loadGoals={loadGoals}
                   dummyGoal={dummyGoal} 
                 />
               </Route>

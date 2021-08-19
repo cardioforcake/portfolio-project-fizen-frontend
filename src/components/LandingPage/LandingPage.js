@@ -11,14 +11,9 @@ function LandingPage(){
         spacing={3}
       >
         <Grid item sm={12}>
-          <Typography variant="h2" align="center">Our App Title</Typography>
+          <img src="/fizen.svg" />
         </Grid>
         <Grid item sm={10}>
-          <div style={{
-            width: "400px",
-            height: "400px",
-            backgroundColor: "goldenrod"
-          }}>logo goes here</div>
         </Grid>
         <Grid item sm={10}>
           <Link to="/login">
