@@ -1,7 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
-import {InputOne, InputTwo, InputThree, InputFour, InputFive} from './components/Inputs/Inputs';
+import {InputOne, InputTwo, InputThree, InputFour, InputFive, TutResults} from './components/Inputs/Inputs';
 import TutDetails from './components/TutDetails/TutDetails';
-import TutResults from './components/TutResults/TutResults';
 import Registration from './components/Registration/Registration';
 
 
