@@ -57,7 +57,7 @@ export default function LoginPage(props){
         <Button variant="contained" color="primary" onClick={handleRegister}>Register</Button>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={() => verifyToken()
                           .then(result => result ? setMessage("Token Valid.")
                                                  : setMessage("Token Invalid."))}
@@ -66,7 +66,7 @@ export default function LoginPage(props){
         </Button>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={async () => {
             console.log(await createGoal({
               title: "car",
