@@ -25,7 +25,7 @@ async function getAllGoals() {
 
 async function updateGoal(goal) {
   try {
-    const response = await axios.post(`${ENDPOINT}/${goal._id}`, goal, withTokenHeaders());
+    const response = await axios.put(`${ENDPOINT}/${goal._id}`, goal, withTokenHeaders());
 
     return { goal: response.data.goal, message: response.data.message };
   } catch(err) {

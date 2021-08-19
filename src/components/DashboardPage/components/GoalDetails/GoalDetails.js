@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Button, Slider, Input, Select } from '@material-ui/core';
 import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
 import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
+import { getAllGoals, updateGoal } from '../../../../utils/goals-api';
 import styles from './GoalDetails.module.css'
 
 function GoalDetails(props){
@@ -27,6 +28,18 @@ function GoalDetails(props){
     })
     setGoalProgress(props.goal.progress)
   },[])
+
+  async function syncGoal() {
+    // FIXME I am not proud of this
+    const goalPayload = { ...props.goal, ...goalParams, progress: goalProgress };
+
+    // FIXME handle message
+    let { goal, message } = await updateGoal(goalPayload);
+
+    if (goal) {
+      props.loadGoals();
+    }
+  }
 
   useEffect(()=>{
     if(calcProgress(goalParams) !== goalProgress.progress){
@@ -74,7 +87,8 @@ function GoalDetails(props){
           onChangeCommitted={(e, value)=>{updateProgress(value, setGoalProgress, goalParams, setGoalParams)}}
         />
       </div>
-      <Button onClick={()=>props.setGoalSelect(null)}>Back</Button>
+      <Button variant="contained" color="default" onClick={()=>props.setGoalSelect(null)}>Back</Button>
+      <Button variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
     </div>
   )
 }

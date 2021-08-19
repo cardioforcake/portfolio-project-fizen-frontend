@@ -104,6 +104,7 @@ function App() {
                   user={user}
                   goals={goals}
                   setGoals={setGoals}
+                  loadGoals={loadGoals}
                   dummyGoal={dummyGoal} 
                 />
               </Route>

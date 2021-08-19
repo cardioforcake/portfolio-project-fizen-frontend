@@ -38,6 +38,8 @@ function DashboardPage(props) {
     return(
       <div>
         <GoalDetails
+          setGoals={props.setGoals}
+          loadGoals={props.loadGoals}
           goal={props.goals[goalSelected]}
           setGoalSelect={setGoalSelected}
         />
