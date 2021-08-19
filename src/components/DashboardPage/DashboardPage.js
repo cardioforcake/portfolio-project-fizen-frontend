@@ -23,7 +23,7 @@ function DashboardPage(props) {
       <div>
         <GoalThumbNail
           goal={props.goals[goalDisplayed]}
-          progress={props.goals[goalDisplayed].progess}
+          progress={props.goals[goalDisplayed].progress}
           title={props.goals[goalDisplayed].title}
           setGoalSelected={setGoalSelected}
         />
