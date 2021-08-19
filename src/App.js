@@ -77,7 +77,10 @@ function App() {
           <Container maxWidth="sm">
             <Switch>
               <Route path="/tutorial">
-                <Tutorial/>
+                <Tutorial
+                  setUser={setUser}
+                  setGoals={setGoals}
+                />
               </Route>
               <Route path="/login">
                 <LoginPage
