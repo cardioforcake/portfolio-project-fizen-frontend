@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  alert: {
+    width: '100%'
+  },
   password: {
     marginBottom: theme.spacing(4),
   },
@@ -52,7 +55,7 @@ export default function LoginPage(props){
   return(
     <div className={classes.login}>
       <Typography variant="h3">Login</Typography>
-      {message ? <Alert severity="warning">{message}</Alert> : null}
+      {message ? <Alert className={classes.alert} severity="warning">{message}</Alert> : null}
       <form
         autoComplete="off"
         onSubmit={handleLogin}
