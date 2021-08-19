@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Container, createTheme, CssBaseline, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
+import { verifyToken } from './utils/users-api';
 import Tutorial from './components/Tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -62,6 +63,17 @@ function App() {
       setMessage(err.message);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      const { user, message } = await verifyToken();
+      console.log(user);
+      if (user) {
+        setUser(user);
+        loadGoals();
+      }
+    })();
+  }, []);
 
   return (
     <div>
