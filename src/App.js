@@ -2,12 +2,24 @@ import './App.css';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, Container, CssBaseline, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Container, createTheme, CssBaseline, ThemeProvider, Toolbar } from '@material-ui/core';
 import { getAllGoals } from './utils/goals-api';
 import Tutorial from './tutorial/Tutorial';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DashboardPage from './components/DashboardPage/DashboardPage';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0e4a81',
+      dark: '#033666'
+    },
+    secondary: {
+      main: '#c44747',
+    }
+  }
+});
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -44,48 +56,50 @@ function App() {
   return (
     <div>
       <CssBaseline />
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <AppBar className={classes.appBar} position="static">
             <Toolbar className={classes.toolbar}>
               <Link to="/">
                 <Button variant="contained" color="primary">Home</Button>
               </Link>
-            {
-              user ?
-                <Link to="/dashboard">
-                  <Button variant="contained" color="primary">
-                    Dashboard: {user?.name}
-                  </Button>
-                </Link>
-              : null
-            }
+              {
+                user ?
+                  <Link to="/dashboard">
+                    <Button variant="contained" color="primary">
+                      Dashboard: {user?.name}
+                    </Button>
+                  </Link>
+                  : null
+              }
             </Toolbar>
           </AppBar>
           <Container maxWidth="sm">
-          <Switch>
-            <Route path="/tutorial">
-              <Tutorial/>
-            </Route>
-            <Route path="/login">
-              <LoginPage
-                user={user}
-                setUser={setUser}
-                loadGoals={loadGoals}
-              />
-            </Route>
-            <Route path="/dashboard">
-              <DashboardPage
-                user={user}
-                goals={goals}
-                setGoals={setGoals}
-              />
-            </Route>
-            <Route path="/">
-              <LandingPage/>
-            </Route>
-          </Switch>
-        </Container>
-      </BrowserRouter>
+            <Switch>
+              <Route path="/tutorial">
+                <Tutorial/>
+              </Route>
+              <Route path="/login">
+                <LoginPage
+                  user={user}
+                  setUser={setUser}
+                  loadGoals={loadGoals}
+                />
+              </Route>
+              <Route path="/dashboard">
+                <DashboardPage
+                  user={user}
+                  goals={goals}
+                  setGoals={setGoals}
+                />
+              </Route>
+              <Route path="/">
+                <LandingPage/>
+              </Route>
+            </Switch>
+          </Container>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }
