@@ -142,7 +142,7 @@ function GoalThumbNail(props){
       <Typography className={classes.header}>
         MY GOALS
       </Typography>
-      <Card onClick={()=>{props.setGoalSelected(0)}} className={classes.goalTN}>
+      <Card onClick={()=>{props.setGoalSelected(props.goalDisplayed);}} className={classes.goalTN}>
         <div className={classes.title}>
           <Typography className={classes.titleLabel}>
             {props.title.toUpperCase()}
@@ -169,7 +169,10 @@ function GoalThumbNail(props){
         </div>
       </Card>
       <div className={classes.footer}>
-        <ThumbNailFooter />
+        <ThumbNailFooter
+          doCreateGoal={props.doCreateGoal}
+          doDeleteGoal={props.doDeleteGoal}
+        />
       </div>
  
     </div>
