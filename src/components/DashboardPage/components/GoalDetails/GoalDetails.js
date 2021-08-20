@@ -1,11 +1,76 @@
 import { useState, useEffect } from "react"
-import { Button, Slider, Input, Select } from '@material-ui/core';
+import { Button, Slider, Input, Select, Grid, Typography } from '@material-ui/core';
 import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
 import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
 import { getAllGoals, updateGoal } from '../../../../utils/goals-api';
 import styles from './GoalDetails.module.css'
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme)=>({
+  currentToGoal:{
+    height: '50%'
+  },
+  currentToGoalContainer:{
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  },
+  progressText:{
+    color: '#356895',
+    width: '4rem',
+    margin: 'auto',
+  },
+  progressBar:{
+    height: '15rem'
+  }
+}))
+
+const marks = [
+  {
+    value: 0.55,
+    label: 'Behind',
+  },
+  {
+    value: 1,
+    label: 'On Track',
+  },
+  {
+    value: 1.45,
+    label: 'Ahead',
+  },
+];
+
+const ProgressSlider = withStyles({
+  root: {
+    color: 'black',
+
+  },
+  thumb:{
+    marginLeft:'-5px !important',
+    width: '1rem',
+    // borderRadius: '0.2rem !important',
+    height: '1rem',
+    color: '#356895',
+    border: '2px solid grey'
+  },
+  rail:{
+    // backgroundImage:  'linear-gradient(.50turn, #f00, #00f)',
+    width: '0.4rem !important',
+    opacity: '1 !important',
+    borderRadius: '0.5rem'
+
+  },
+  track:{
+    // backgroundImage:  'linear-gradient(.50turn, #f00, #00f)',
+    width: '0.4rem !important',
+    borderRadius: '0.5rem'
+  },
+})(Slider)
+
 
 function GoalDetails(props){
+  const classes = useStyles()
+
   const [goalParams, setGoalParams]= useState({
     title: '',
     targetAmount: 0,
@@ -59,36 +124,68 @@ function GoalDetails(props){
 
   return(
     <div>
-      Title: <Input type="text" value={goalParams.title} onChange={(e)=>{updateTitle(e.target.value, setGoalParams)}}/>
-      CSP: <Input type="number" value={goalParams.cspAmount} onChange={(e)=>{changeCSP(e.target.value, setGoalParams)}}/>
-      Target: <Input type="number" value={goalParams.targetAmount} onChange={(e)=>{updateTarget(e.target.value, setGoalParams)}}/>
-      Time: <Select value={monthIdx[goalParams.targetDate.getMonth()]} onChange={(e)=>updateTimeM(e.target.value, setGoalParams)}>
-              {monthOptions}
-            </Select>
-            <Select value={goalParams.targetDate.getFullYear()} onChange={(e)=>updateTimeY(e.target.value, setGoalParams)}>
-              {yearOptions}
-            </Select>
-      Current Balance: <Input type="number" value={goalParams.currentAmount} onChange={(e)=>updateCurrent(e.target.value, setGoalParams)}/>
-      Risk Tolerance: <Select value={goalParams.riskTolerance} onChange={(e)=>updateRisk(e.target.value, setGoalParams)}>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
+          <Input type="text" value={goalParams.title} onChange={(e)=>{updateTitle(e.target.value, setGoalParams)}}/>
+        </Grid>
+        <Grid item xs={12}>
+            <Typography className={classes.progressText}>
+              Progress
+            </Typography>
+
+        </Grid>
+        <Grid item xs={6}>
+          <div>
+          <div className={classes.progressBar}>
+
+            <ProgressSlider
+              min={0.5}
+              max={1.5}
+              step={0.01}
+              key={`${goalProgress}`}
+              orientation="vertical"
+              defaultValue={goalProgress}
+              onChangeCommitted={(e, value)=>{updateProgress(value, setGoalProgress, goalParams, setGoalParams)}}
+            />
+          </div>
+          </div>
+
+        </Grid>
+        <Grid item xs={6}>
+          <div className={classes.currentToGoalContainer}>
+            <div className={classes.currentToGoal}>
+              <Input type="number" value={goalParams.targetAmount} onChange={(e)=>{updateTarget(e.target.value, setGoalParams)}}/>
+            </div>
+            <div className={classes.currentToGoal}>
+              <Input type="number" value={goalParams.currentAmount} onChange={(e)=>updateCurrent(e.target.value, setGoalParams)}/>
+            </div>
+
+          </div>    
+        </Grid>
+        <Grid item xs={12}>
+          <Input type="number" value={goalParams.cspAmount} onChange={(e)=>{changeCSP(e.target.value, setGoalParams)}}/>
+        </Grid>
+        <Grid item xs={12}>
+          <Select value={monthIdx[goalParams.targetDate.getMonth()]} onChange={(e)=>updateTimeM(e.target.value, setGoalParams)}>
+            {monthOptions}
+          </Select>
+          <Select value={goalParams.targetDate.getFullYear()} onChange={(e)=>updateTimeY(e.target.value, setGoalParams)}>
+            {yearOptions}
+          </Select>
+        </Grid>
+        <Grid item xs={12}>
+          <Select value={goalParams.riskTolerance} onChange={(e)=>updateRisk(e.target.value, setGoalParams)}>
                         <option value="1">Low</option>
                         <option value="2">Low to Medium</option>
                         <option value="3">Medium</option>
                         <option value="4">Medium to High</option>
                         <option value="5">High</option>
                       </Select>
-      <div className={styles.progressBar}>
-        <Slider
-          min={0.5}
-          max={1.5}
-          step={0.01}
-          key={`${goalProgress}`}
-          orientation="vertical"
-          defaultValue={goalProgress}
-          onChangeCommitted={(e, value)=>{updateProgress(value, setGoalProgress, goalParams, setGoalParams)}}
-        />
-      </div>
+        </Grid>
       <Button variant="contained" color="default" onClick={()=>props.setGoalSelect(null)}>Back</Button>
       <Button variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
+      </Grid>
+
     </div>
   )
 }
