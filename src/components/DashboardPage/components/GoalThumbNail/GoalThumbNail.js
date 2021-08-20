@@ -1,33 +1,100 @@
-import { Button, List, ListItem, Typography, Card,Slider } from '@material-ui/core';
+import { Button, Typography, Card,Slider } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import styles from './GoalThumbNail.module.css'
+import ThumbNailFooter from './components/ThumbNailFooter/ThumbNailFooter'
+import {useState, useEffect} from 'react'
+
+
 const useStyles = makeStyles((theme)=>({
   goalTN:{
     height: '60vh',
+    width: '70%',
+    margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: '1rem',
+    boxShadow: '0px 1px 10px 1px black'
   },
   sliderTN:{
-    height: '30vh',
+    height: '35vh',
     // display: 'flex',
     // justifyContent: 'center',
     // alignItems: 'center'
   },
   title:{
     marginLeft: '10px',
-    height: '15vh'
+    height: '15vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  titleLabel:{
+    color: '#356895',
+    fontSize: '1.2rem',
+    fontWeight: '600'
   },
   balance:{
-    height: '15vh'
+    height: '15vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  center:{
+  balanceLabel:{
+    color: '#356895',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+
+    fontWeight: '600',
+  },
+  balanceAmount:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: '500',
+    fontSize: '1.4rem',
+  },
+  header:{
+    height: '10vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#356895',
+    fontSize: '1.5rem',
+    fontWeight: '600'
+  },
+  footer:{
+    height: '15vh',
+    // width: '70%',
+    margin: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center'
+  },
+  message:{
+    fontSize: '1.1rem',
+    color: 'black'
   }
 }))
+
+const marks = [
+  {
+    value: 0.55,
+    label: 'Behind',
+  },
+  {
+    value: 1,
+    label: 'On Track',
+  },
+  {
+    value: 1.45,
+    label: 'Ahead',
+  },
+];
 
 const ThumbNailSlider = withStyles({
   root: {
@@ -35,13 +102,13 @@ const ThumbNailSlider = withStyles({
 
   },
   thumb:{
-    marginLeft:'-4px !important',
-    width: '1rem',
-    borderRadius: '0.2rem !important',
-    height: '0.5rem',
-    color: 'blue'
+    marginLeft:'-5.5px !important',
+    width: '1.3rem',
+    // borderRadius: '0.2rem !important',
+    height: '1.3rem',
+    color: '#356895',
+    border: 'solid grey'
   },
-  active: {},
   rail:{
     // backgroundImage:  'linear-gradient(.50turn, #f00, #00f)',
     width: '0.5rem !important',
@@ -53,30 +120,58 @@ const ThumbNailSlider = withStyles({
     // backgroundImage:  'linear-gradient(.50turn, #f00, #00f)',
     width: '0.5rem !important',
     borderRadius: '0.5rem'
-
   },
 })(Slider)
 
 function GoalThumbNail(props){
   const classes = useStyles()
+  const [message, setMessage] = useState('You are on track!')
+
+  useEffect(()=>{
+    if(props.progress > 1.1){
+      setMessage('You are ahead!')
+    }else if(props.progress < 0.75){
+      setMessage('Time to update your goal!')
+    }else if(props.progress < 0.85){
+      setMessage("Just a bit behind")
+    }
+  },[])
+
   return(
     <div>
-      <Typography variant="h4" className={classes.center}>
+      <Typography className={classes.header}>
         MY GOALS
       </Typography>
       <Card onClick={()=>{props.setGoalSelected(0)}} className={classes.goalTN}>
-        <Typography variant="h5" className={classes.title}>
-          {props.title.toUpperCase()}
-        </Typography>
+        <div className={classes.title}>
+          <Typography className={classes.titleLabel}>
+            {props.title.toUpperCase()}
+          </Typography>
+          <Typography className={classes.message}>{message}</Typography>
+        </div>
+
         <div className={classes.sliderTN}>
           <ThumbNailSlider 
             min={0.5}
             max={1.5}
             orientation="vertical"
             value={props.progress}
+            // marks={marks}
           />
         </div>
+        <div className={classes.balance}>
+          <Typography className={classes.balanceLabel}>
+            CURRENT BALANCE:
+          </Typography>
+          <Typography className={classes.balanceAmount}>
+            ${props.currentAmount}
+          </Typography>
+        </div>
       </Card>
+      <div className={classes.footer}>
+        <ThumbNailFooter />
+      </div>
+ 
     </div>
 
   )

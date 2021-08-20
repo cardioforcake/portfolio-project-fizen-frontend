@@ -6,17 +6,7 @@ import GoalThumbNail from './components/GoalThumbNail/GoalThumbNail'
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
   const [goalDisplayed, setGoalDisplayed] = useState(0)
-  const [goalMap, setGoalMap] = useState([])
   // const [zoomedGoal, setZoomedGoal] = useState(null)
-  // useEffect(()=>{
-  //   let mapped = props.goals.map((goal,idx)=>{
-  //     return (
-  //       <GoalThumbNail
-  //         goal={props.goals[idx]}
-  //       />
-  //     )
-  //   })
-  // })
 
   if(goalSelected===null){
     return(
@@ -25,13 +15,9 @@ function DashboardPage(props) {
           goal={props.goals[goalDisplayed]}
           progress={props.goals[goalDisplayed].progress}
           title={props.goals[goalDisplayed].title}
+          currentAmount={props.goals[goalDisplayed].currentAmount}
           setGoalSelected={setGoalSelected}
         />
-        <p>{props.goals[goalDisplayed].progress}</p>
-        <p>{props.goals[goalDisplayed].targetDate}</p>
-        {/* <Card onClick={()=>{setGoalSelected(0)}}>
-          <p>{props.goals[0].title}</p>
-        </Card> */}
       </div>
     )
   }else{
