@@ -7,7 +7,7 @@ import { createGoal, deleteGoal } from '../../utils/goals-api';
 
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
-  const [goalDisplayed, setGoalDisplayed] = useState(1)
+  const [goalDisplayed, setGoalDisplayed] = useState(0)
   // const [zoomedGoal, setZoomedGoal] = useState(null)
   const history = useHistory();
 

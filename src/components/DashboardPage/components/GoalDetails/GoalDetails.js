@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Button, Slider, Input, Select, Grid, Typography } from '@material-ui/core';
+import { Button, Slider, Input, Select, Grid, Typography,InputAdornment, InputBase } from '@material-ui/core';
 import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
 import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
 import { getAllGoals, updateGoal } from '../../../../utils/goals-api';
@@ -8,7 +8,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme)=>({
   currentToGoal:{
-    height: '50%'
+    height: '50%',
+    textAlign: 'center',
   },
   currentToGoalContainer:{
     display: 'flex',
@@ -19,15 +20,42 @@ const useStyles = makeStyles((theme)=>({
     color: '#356895',
     width: '4rem',
     margin: 'auto',
+    fontWeight: '500'
   },
   progressBar:{
     height: '15rem'
+  },
+  targetLabel:{
+    color: '#356895',
+    fontSize: '0.8rem',
+    fontWeight: '400'
+  },
+  currentLabel:{
+    color: '#356895',
+    fontSize: '1.2rem',
+    fontWeight: '400'
+  },
+  currentAmount:{
+    fontSize: '1.3rem',
+    textAlign: 'center'
+  },
+  csp:{
+    color: '#356895',
+    fontSize: '1.2rem',
+    fontWeight: '500',
+    marginRight: '2rem'
+  },
+  cspContainer:{
+    display: 'flex',
+  },
+  cspAmount:{
+    fontSize: '1.2rem'
   }
 }))
 
 const marks = [
   {
-    value: 0.55,
+    value: 0.6,
     label: 'Behind',
   },
   {
@@ -35,7 +63,7 @@ const marks = [
     label: 'On Track',
   },
   {
-    value: 1.45,
+    value: 1.4,
     label: 'Ahead',
   },
 ];
@@ -46,7 +74,7 @@ const ProgressSlider = withStyles({
 
   },
   thumb:{
-    marginLeft:'-5px !important',
+    marginLeft:'-4.5px !important',
     width: '1rem',
     // borderRadius: '0.2rem !important',
     height: '1rem',
@@ -65,6 +93,13 @@ const ProgressSlider = withStyles({
     width: '0.4rem !important',
     borderRadius: '0.5rem'
   },
+  markLabel:{
+    marginLeft: -80,
+  },
+  markActive:{
+    opacity: '0'
+  }
+
 })(Slider)
 
 
@@ -126,7 +161,11 @@ function GoalDetails(props){
     <div>
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Input type="text" value={goalParams.title} onChange={(e)=>{updateTitle(e.target.value, setGoalParams)}}/>
+          <InputBase 
+            type="text" 
+            value={goalParams.title.toUpperCase()} 
+            onChange={(e)=>{updateTitle(e.target.value, setGoalParams)}}
+          />
         </Grid>
         <Grid item xs={12}>
             <Typography className={classes.progressText}>
@@ -146,6 +185,7 @@ function GoalDetails(props){
               orientation="vertical"
               defaultValue={goalProgress}
               onChangeCommitted={(e, value)=>{updateProgress(value, setGoalProgress, goalParams, setGoalParams)}}
+              marks={marks}
             />
           </div>
           </div>
@@ -154,16 +194,45 @@ function GoalDetails(props){
         <Grid item xs={6}>
           <div className={classes.currentToGoalContainer}>
             <div className={classes.currentToGoal}>
-              <Input type="number" value={goalParams.targetAmount} onChange={(e)=>{updateTarget(e.target.value, setGoalParams)}}/>
+              <Typography className={classes.targetLabel}>
+                Target Goal
+              </Typography>
+              <Input 
+                type="number" 
+                value={goalParams.targetAmount} 
+                onChange={(e)=>{updateTarget(e.target.value, setGoalParams)}}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              />
             </div>
             <div className={classes.currentToGoal}>
-              <Input type="number" value={goalParams.currentAmount} onChange={(e)=>updateCurrent(e.target.value, setGoalParams)}/>
+              <Typography className={classes.currentLabel}>
+                Current Balance
+              </Typography>
+              <Input
+                type="number" 
+                value={goalParams.currentAmount} 
+                onChange={(e)=>updateCurrent(e.target.value, setGoalParams)}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                className={classes.cspAmount}
+              />
             </div>
 
           </div>    
         </Grid>
         <Grid item xs={12}>
-          <Input type="number" value={goalParams.cspAmount} onChange={(e)=>{changeCSP(e.target.value, setGoalParams)}}/>
+          <div className={classes.cspContainer}>
+            <Typography className={classes.csp}>
+              Monthly Contribution:
+            </Typography>
+            <InputBase 
+              type="number" 
+              value={goalParams.cspAmount} 
+              onChange={(e)=>{changeCSP(e.target.value, setGoalParams)}}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              className={classes.cspAmount}
+            />
+          </div>
+ 
         </Grid>
         <Grid item xs={12}>
           <Select value={monthIdx[goalParams.targetDate.getMonth()]} onChange={(e)=>updateTimeM(e.target.value, setGoalParams)}>
