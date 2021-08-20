@@ -255,7 +255,7 @@ function TutDetails(props){
   }
   let monthOptions = []
   for(let i=0; i< 12; i++ ){
-    monthOptions.push(<option value={monthIdx[i]} key={i}>{monthIdx[i]}</option>)
+    monthOptions.push(<option value={i} key={i}>{monthIdx[i]}</option>)
   }
 
   return(
@@ -345,7 +345,7 @@ function TutDetails(props){
             </Typography>
             <div className={classes.dateSelectContainer}>
               <NativeSelect 
-                value={monthIdx[props.tutParams.targetDate.getMonth()]} 
+                value={props.tutParams.targetDate.getMonth()} 
                 onChange={(e)=>updateTimeM(e.target.value, props.setTutParams)}
                 className={classes.selectBorder}
               >

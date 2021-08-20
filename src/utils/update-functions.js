@@ -24,7 +24,7 @@ function updateTarget(value, setParams){
 
 function updateTimeY(value, setParams){
   setParams(prev=>{
-    let newDate = new Date(prev.targetDate)
+    let newDate = new Date(prev.targetDate.getFullYear(), prev.targetDate.getMonth(),1)
     newDate.setYear(Number(value))
     return{
       ...prev,
@@ -35,8 +35,9 @@ function updateTimeY(value, setParams){
 
 function updateTimeM(value, setParams){
   setParams(prev=>{
-    let newDate = new Date(prev.targetDate)
-    newDate.setMonth(Number(value))
+    let newDate = new Date(prev.targetDate.getFullYear(), prev.targetDate.getMonth(),1)
+    console.log(value)
+    newDate.setMonth(value)
     return{
       ...prev,
       targetDate: newDate

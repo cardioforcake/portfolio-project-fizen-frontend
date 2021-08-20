@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Button, Slider, Input, NativeSelect, Grid, Typography,InputAdornment, Card } from '@material-ui/core';
+import { Button, Slider, Input,Select, NativeSelect, Grid, Typography,InputAdornment, Card } from '@material-ui/core';
 import {updateProgress, nextTut, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
 import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
 import { getAllGoals, updateGoal } from '../../../../utils/goals-api';
@@ -285,7 +285,7 @@ function GoalDetails(props){
   }
   let monthOptions = []
   for(let i=0; i< 12; i++ ){
-    monthOptions.push(<option value={monthIdx[i]} key={i}>{monthIdx[i]}</option>)
+    monthOptions.push(<option value={i} key={i}>{monthIdx[i]}</option>)
   }
 
   return(
@@ -385,7 +385,7 @@ function GoalDetails(props){
             </Typography>
             <div className={classes.dateSelectContainer}>
               <NativeSelect 
-                value={monthIdx[goalParams.targetDate.getMonth()]} 
+                value={goalParams.targetDate.getMonth()} 
                 onChange={(e)=>updateTimeM(e.target.value, setGoalParams)}
                 className={classes.selectBorder}
               >
