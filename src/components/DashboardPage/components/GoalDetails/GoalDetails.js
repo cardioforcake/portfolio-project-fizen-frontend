@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react"
-import {Link} from 'react-router-dom';
-import { Button, Slider, Input, InputLabel, FormControl, NativeSelect, Grid, Typography,InputAdornment, InputBase, Card } from '@material-ui/core';
-import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
+import { Button, Slider, Input, NativeSelect, Grid, Typography,InputAdornment, Card } from '@material-ui/core';
+import {updateProgress, nextTut, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
 import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
 import { getAllGoals, updateGoal } from '../../../../utils/goals-api';
-import styles from './GoalDetails.module.css'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { ClassSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme)=>({
   titleLabel:{
