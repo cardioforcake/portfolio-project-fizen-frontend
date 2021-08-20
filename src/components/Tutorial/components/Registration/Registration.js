@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -18,10 +18,8 @@ const useStyles = makeStyles((theme) => ({
   alert: {
     width: '100%'
   },
-  password: {
-    marginBottom: theme.spacing(4),
-  },
   footerBtn:{
+    marginTop: theme.spacing(4),
     width: '100%',
     borderRadius: '1rem',
     marginTop: '1rem',
@@ -38,11 +36,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Register(props){
-  const [formData, setFormData] = useState({ name: "", password: "" });
+  const [formData, setFormData] = useState({ name: "", password: "", confirmPassword: "" });
   const [message, setMessage] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const history = useHistory();
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (formData.password === formData.confirmPassword) {
+      setPasswordsMatch(true);
+    } else {
+      setPasswordsMatch(false);
+    }
+  }, [formData]);
 
   async function callLogin() {
     const { user, message } = await login(formData);
@@ -57,8 +64,13 @@ export default function Register(props){
 
   async function handleRegister(e) {
     e.preventDefault();
-    const { user, message } = await register(formData);
 
+    if (!passwordsMatch) {
+      setMessage("Passwords do not match.");
+      return;
+    }
+
+    const { user, message } = await register(formData);
 
     if (user) {
       props.setUser(user);
@@ -95,7 +107,6 @@ export default function Register(props){
           onChange= {(e) => setFormData({ ...formData, name: e.target.value })}
         />
         <TextField
-          className={classes.password}
           required
           fullWidth
           label="password" 
@@ -104,6 +115,16 @@ export default function Register(props){
           value={formData.password}
           type="password"
           onChange= {(e) => setFormData({ ...formData, password: e.target.value })}
+        />
+        <TextField
+          required
+          fullWidth
+          label="confirm password" 
+          variant="outlined"
+          margin="normal"
+          value={formData.confirmPassword}
+          type="password"
+          onChange= {(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
         />
         <Button fullWidth className={classes.footerBtn} variant="contained" color="primary" onClick={handleRegister}>REGISTER</Button>
       </form>

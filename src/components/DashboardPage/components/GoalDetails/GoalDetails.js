@@ -294,18 +294,18 @@ function GoalDetails(props){
         <Grid item xs={12}>
           <div className={classes.hearderContainer}>
             <div className={classes.arrow}>
-              <div className={classes.backBtn} onClick={()=>props.setGoalSelect(null)}>
+              <Button variant="outlined" className={classes.backBtn} onClick={()=>props.setGoalSelect(null)}>
                 BACK
                 {/* <img src="/leftArrow.svg" alt="Edit" height="100%" /> */}
-              </div>
+              </Button>
             </div>
             <Typography className={classes.titleLabel}>
               {goalParams.title.toUpperCase()} 
             </Typography>
             <div className={classes.arrow}>
-              <div className={classes.saveBtn} onClick={()=>syncGoal()}>
+              <Button variant="outlined" color="primary" className={classes.saveBtn} onClick={()=>syncGoal()}>
                 SAVE
-              </div>
+              </Button>
             </div>
           </div>
         </Grid>

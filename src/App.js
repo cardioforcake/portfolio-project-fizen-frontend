@@ -121,9 +121,7 @@ function App() {
                     </Grid>
                   </div>
                   : 
-                  <Link to="/login">
-                    <Button variant="contained" color="primary">Login</Button>
-                  </Link>
+                  null
               }
             </Toolbar>
           </AppBar>
