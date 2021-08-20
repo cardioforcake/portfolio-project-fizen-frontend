@@ -146,7 +146,7 @@ function GoalThumbNail(props){
     }else if(props.progress < 0.75){
       setMessage('Time to update your goal!')
     }else if(props.progress < 0.85){
-      setMessage("Just a bit behind")
+      setMessage("A little behind")
     }
   },[])
 
