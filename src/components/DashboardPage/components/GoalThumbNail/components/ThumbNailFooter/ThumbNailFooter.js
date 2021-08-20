@@ -100,7 +100,7 @@ function ThumbNailFooter(props){
           </DialogContentText>
         </DialogContent>
       </Dialog>
-      <Button>
+      <Button onClick={()=>{props.setGoalSelected(props.goalDisplayed)}}>
         <img src="/Edit.svg" alt="Edit" height="80%" />
       </Button>
     </div>

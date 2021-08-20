@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginTop: '4rem'
   },
   alert: {
     width: '100%'
@@ -20,6 +21,20 @@ const useStyles = makeStyles((theme) => ({
   password: {
     marginBottom: theme.spacing(4),
   },
+  footerBtn:{
+    width: '100%',
+    borderRadius: '1rem',
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
+    fontSize: '1rem',
+    fontWeight: '500'
+  },
+  registerLabel:{
+    color: '#356895',
+    fontSize: '2rem',
+    fontWeight: '500',
+    marginBottom: '1.5rem'
+  }
 }));
 
 export default function Register(props){
@@ -65,7 +80,7 @@ export default function Register(props){
 
   return(
     <div className={classes.login}>
-      <Typography variant="h3">Register</Typography>
+      <Typography className={classes.registerLabel}>REGISTER</Typography>
       {message ? <Alert className={classes.alert} severity="warning">{message}</Alert> : null}
       <form
         autoComplete="off"
@@ -90,7 +105,7 @@ export default function Register(props){
           type="password"
           onChange= {(e) => setFormData({ ...formData, password: e.target.value })}
         />
-        <Button fullWidth variant="contained" color="primary" onClick={handleRegister}>Register</Button>
+        <Button fullWidth className={classes.footerBtn} variant="contained" color="primary" onClick={handleRegister}>REGISTER</Button>
       </form>
     </div>
   );

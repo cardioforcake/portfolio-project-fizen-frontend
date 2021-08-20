@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react"
-import {  Button, Slider, Input, NativeSelect, Grid, Typography,InputAdornment, Card } from '@material-ui/core';
-import {updateProgress, nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
-import {calcCSP, calcProgress, calcNewCSP} from '../../../../utils/calc-functions.js'
-import styles from './TutDetails.module.css'
+import { useEffect } from "react"
+import { Button, Slider, Input, NativeSelect, Grid, Typography,InputAdornment, Card } from '@material-ui/core';
+import { updateProgress, nextTut, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, changeCSP, updateCSP} from '../../../../utils/update-functions.js'
+import { calcProgress} from '../../../../utils/calc-functions.js'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme)=>({
@@ -265,7 +264,7 @@ function TutDetails(props){
         <Grid item xs={12}>
           <Button 
             className={classes.headerBtn} 
-            variant="contained" color="secondary" 
+            variant="contained" color="primary" 
             onClick={()=>{nextTut(props.setTutSec); updateCSP(props.tutParams, props.setTutParams)}}
           >
             Register & Save
@@ -372,7 +371,7 @@ function TutDetails(props){
               min={1}
               max={5}
               step={1}
-              defaultValue={props.tutParams.riskTolerance}
+              defaultValue={3}
               onChangeCommitted={(e, value)=>updateRisk(value, props.setTutParams)}
             />
           </div>
@@ -387,7 +386,7 @@ function TutDetails(props){
         <Grid item xs={12}>
           <Button 
             className={classes.footerBtn} 
-            variant="contained" color="secondary" 
+            variant="contained" color="primary" 
             onClick={()=>{nextTut(props.setTutSec); updateCSP(props.tutParams, props.setTutParams)}}
           >
             Register & Save

@@ -308,13 +308,6 @@ function GoalDetails(props){
               </div>
             </div>
           </div>
-
-          {/* <InputBase 
-            type="text" 
-            value={goalParams.title.toUpperCase()} 
-            onChange={(e)=>{updateTitle(e.target.value, setGoalParams)}}
-            className={classes.titleLabel}
-          /> */}
         </Grid>
         <Grid item xs={12}>
             <Typography className={classes.progressText}>
@@ -438,7 +431,7 @@ function GoalDetails(props){
             </NativeSelect> */}
         </Grid>
         <Grid item xs={12}>
-          <Button className={classes.footerBtn} variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
+          <Button className={classes.footerBtn} variant="contained" color="primary" onClick={()=>syncGoal()}>Save</Button>
         </Grid>
 
       </Grid>

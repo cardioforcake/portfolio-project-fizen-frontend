@@ -1,36 +1,157 @@
 import { useEffect } from 'react';
-import { Button, Grid, Input, Select, Typography } from '@material-ui/core';
+import { Button, Grid, Input, Tooltip, NativeSelect, Typography, InputAdornment, Slider } from '@material-ui/core';
 import { nextTut, updateTitle, updateTarget, updateTimeY, updateTimeM, updateCurrent, updateRisk, updateCSP }
   from '../../../../utils/update-functions.js';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme)=>({
+  footerBtn:{
+    width: '75%',
+    borderRadius: '1rem',
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
+    fontSize: '1rem',
+    fontWeight: '500'
+  },
+  inputField:{
+    width: '50%',
+    margin: '0 auto',
+    fontSize: '1.5rem',
+    fontWeight: '500',
+    color: '#303030'
+  },
+  outputField:{
+    fontSize: '1.5rem',
+    color: '#303030',
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  centerContainer:{
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '25vh'
+  },
+  footerContainer:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    height: '25vh',
+  },
+  headerContainer:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    height: '25vh'
+  },
+  headerText:{
+    fontSize: '1.8rem',
+  },
+  subText:{
+    fontSize: '1.5rem'
+  },
+  subSubText:{
+    fontSize: '0.9rem',
+    color: '#505050'
+  },
+  selectBorder:{
+    margin: '0 1.5rem 0.5rem 1.5rem',
+    borderRadius: '0.5rem',
+    width: '6rem',
+    fontSize: '1.4rem',
+    color: '#353535'
+  },
+  riskDesc:{
+    color: '#356895',
+    textAlign: 'center',
+    fontWeight: '400',
+    fontSize: '1.2rem'
+  },
+  riskSliderContainer:{
+    width: '100%',
+    margin: '0 auto 0.1rem auto'
+  },
+  riskPrompt:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tooltipFont:{
+    fontSize: '1.2rem !important'
+  }
+}))
+
+const RiskSlider = withStyles({
+  track:{
+    color: '#303030',
+    height: '0.5rem',
+    borderRadius: '2rem'
+  },
+  rail:{
+    color: '#303030',
+    opacity: '1',
+    height: '0.5rem',
+    borderRadius: '2rem'
+  },
+  thumb:{
+    width: '1.5rem',
+    height: '1.5rem',
+    border: '2px solid grey',
+    marginTop: '-8px'
+  }
+})(Slider)
+
+const riskDescLabel=[
+  'Low Risk',
+  'Low to Medium Risk',
+  'Medium Risk',
+  'Medium to High Risk',
+  'High Risk'
+]
+
+const riskReturn=[
+  '~2-3%',
+  '~3-5%',
+  '~5-6.5%',
+  '~6.5-8.5%',
+  '~8.5%+'
+]
 
 
 function TutorialStep({ setTutSec, prompt, input }) {
+  const classes = useStyles()
   return(
     <div>
       <Grid
         container
-        direction="column"
-        justifyContent="stretch"
+        // direction="column"
+        // justifyContent="stretch"
         alignItems="center"
-        spacing={10}
+        spacing={5}
       >
-        <Grid item>
-          <Typography variant="h6" align="center">
-            {prompt}
-          </Typography>
+        <Grid item xs={12}>
+          <div className={classes.headerContainer}>
+              {prompt}
+          </div>
         </Grid>
-        <Grid item sm={12}>
-          {input}
+        <Grid item xs={12}>
+          <div className={classes.centerContainer}>
+            {input}
+          </div>
         </Grid>
-        <Grid item>
-          <Button
-            size="large"
-            variant="contained"
-            color="secondary"
-            onClick={() => nextTut(setTutSec)}
-          >
-            Next
-          </Button>
+        <Grid item xs={12}>
+          <div className={classes.footerContainer}>
+            <Button
+              className={classes.footerBtn}
+              variant="contained"
+              color="primary"
+              onClick={() => nextTut(setTutSec)}
+            >
+              Continue
+            </Button>
+          </div>
         </Grid>
       </Grid>
     </div>
@@ -38,16 +159,23 @@ function TutorialStep({ setTutSec, prompt, input }) {
 }
 
 function InputOne(props){
+  const classes = useStyles()
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
-        Let's set your first financial goal!<br/>Give it a name:
-      </span>}
+      prompt={<Typography variant="h6" align="center">
+        <span className={classes.headerText}>
+          Let's create your first financial goal!
+        </span>
+        <br/>
+        <span className={classes.subText}>
+          Give it a name:
+        </span>
+      </Typography>}
       input={
         <Input
-          fullWidth
           type="text"
+          className={classes.inputField}
           onChange={(e) => updateTitle(e.target.value, props.setTutParams)}
         />}
     />
@@ -55,20 +183,26 @@ function InputOne(props){
 }
 
 function InputTwo(props){
+  const classes = useStyles()
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
+      prompt={<Typography variant="h6" align="center"><span className={classes.subText}>
         How much do you need to save to reach this goal?
-      </span>}
+      </span></Typography>}
       input={
-        <Input type="number" onChange={(e) => updateTarget(e.target.value, props.setTutParams)}/>
+        <Input type="number" 
+          onChange={(e) => updateTarget(e.target.value, props.setTutParams)}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          className={classes.inputField}
+        />
       }
     />
   );
 }
 
 function InputThree(props){
+  const classes = useStyles()
   let today = new Date();
   let monthIdx=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -93,23 +227,25 @@ function InputThree(props){
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
-        How many years from now would you like to reach this goal?
-        </span>}
+      prompt={<Typography variant="h6" align="center"><span className={classes.subText}>
+        When would you like reach this goal?
+        </span></Typography>}
       input={
         <div>
-          <Select
+          <NativeSelect
             defaultValue={monthIdx[today.getMonth()]}
             onChange={(e) => updateTimeM(monthIdx.indexOf(e.target.value), props.setTutParams)}
+            className={classes.selectBorder}
           >
             {monthOptions}
-          </Select>
-          <Select
+          </NativeSelect>
+          <NativeSelect
             defaultValue={today.getFullYear()}
             onChange={(e) => updateTimeY(e.target.value, props.setTutParams)}
+            className={classes.selectBorder}
           >
             {yearOptions}
-          </Select>
+          </NativeSelect>
         </div>
       }
     />
@@ -117,16 +253,19 @@ function InputThree(props){
 }
 
 function InputFour(props){
+  const classes = useStyles()
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
+      prompt={<Typography variant="h6" align="center"><span className={classes.subText}>
         How much have you saved up so far?
-        </span>}
+        </span></Typography>}
       input={
         <Input
           type="number"
           onChange={(e) => updateCurrent(e.target.value, props.setTutParams)}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          className={classes.inputField}
         />
       }
     />
@@ -134,30 +273,50 @@ function InputFour(props){
 }
 
 function InputFive(props){
+  const classes = useStyles()
+
+  const moreInfo= 'To help you reach your goal faster, you want your savings to be invested. There is always a trade off between risk and return. Typically higher risk investments have historically yielded higher returns in the long run.'
+
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
-        In order to help you reach your goal faster, you want your savings to be invested.
-        What level of risk are you willing to take?
-        </span>}
-      input={
-        <Select
-          defaultValue={"3"}
-          onChange={(e) => updateRisk(e.target.value, props.setTutParams)}
-        >
-          <option value="1">Low</option>
-          <option value="2">Low to Medium</option>
-          <option value="3">Medium</option>
-          <option value="4">Medium to High</option>
-          <option value="5">High</option>
-        </Select>
+      prompt={
+        <div className={classes.riskPrompt}>
+          <Typography><span className={classes.subText}>
+            What Level of risk are you willing to take?
+          </span></Typography>
+          <Tooltip title={<p style={{'font-size':'0.9rem'}}>{moreInfo}</p>} className={classes.tooltipFont}>
+            <Typography >
+              <span className={classes.subSubText}>
+                Hover over or hold to find out more
+              </span>
+            </Typography>
+          </Tooltip>
+        </div>
       }
+      input={<>
+        <div className={classes.riskSliderContainer}>
+          <RiskSlider
+            min={1}
+            max={5}
+            step={1}
+            defaultValue={props.tutParams.riskTolerance}
+            onChangeCommitted={(e, value)=>updateRisk(value, props.setTutParams)}
+          />
+        </div>
+        <Typography className={classes.riskDesc}>
+          {riskDescLabel[props.tutParams.riskTolerance-1]}
+        </Typography>
+        <Typography className={classes.riskDesc}>
+          {riskReturn[props.tutParams.riskTolerance-1]}
+        </Typography>
+      </>}
     />
   );
 }
 
 function TutResults(props){
+  const classes = useStyles()
   useEffect(() => {
     console.log(props.tutParams);
     updateCSP(props.tutParams, props.setTutParams);
@@ -166,11 +325,13 @@ function TutResults(props){
   return(
     <TutorialStep
       setTutSec={props.setTutSec}
-      prompt={<span>
+      prompt={<span className={classes.subText}>
         Based on your inputs, you should save the following amount each month. 
         </span>}
       input={
-        <Typography variant="h5">{props.tutParams.cspAmount}</Typography>
+        <Typography className={classes.outputField}>
+          ${props.tutParams.cspAmount}
+        </Typography>
       }
     />
   );

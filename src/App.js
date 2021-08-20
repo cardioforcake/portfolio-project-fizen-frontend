@@ -16,11 +16,13 @@ import {AccountCircle} from '@material-ui/icons';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#0e4a81',
+      main: '#356895',
+      // main: '#0e4a81',
       dark: '#033666'
     },
     secondary: {
       main: '#000000',
+      dark: '#303030'
     },
     dark:{
       main: 'black'
@@ -150,7 +152,11 @@ function App() {
                 />
               </Route>
               <Route path="/">
-                <LandingPage/>
+                <LandingPage
+                  user={user}
+                  setUser={setUser}
+                  loadGoals={loadGoals}
+                />
               </Route>
             </Switch>
           </Container>

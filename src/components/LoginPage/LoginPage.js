@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {Input} from '@material-ui/core/';
 import { register, login, verifyToken } from '../../utils/users-api';
 import { createGoal, getAllGoals } from '../../utils/goals-api';
 import Alert from '@material-ui/lab/Alert';
@@ -20,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
   password: {
     marginBottom: theme.spacing(4),
   },
+  footerBtn:{
+    width: '100%',
+    borderRadius: '1rem',
+    marginTop: '1.5rem',
+    marginBottom: '0',
+    fontSize: '1rem',
+    fontWeight: '500'
+  },
+  loginFields:{
+    borderRadius: '4rem'
+  }
 }));
 
 export default function LoginPage(props){
@@ -57,7 +68,7 @@ export default function LoginPage(props){
 
   return(
     <div className={classes.login}>
-      <Typography variant="h3">Login</Typography>
+      {/* <Typography variant="h3">Login</Typography> */}
       {message ? <Alert className={classes.alert} severity="warning">{message}</Alert> : null}
       <form
         autoComplete="off"
@@ -71,6 +82,7 @@ export default function LoginPage(props){
           margin="normal"
           value={formData.name}
           onChange= {(e) => setFormData({ ...formData, name: e.target.value })}
+          className={classes.loginFields}
         />
         <TextField
           className={classes.password}
@@ -82,11 +94,12 @@ export default function LoginPage(props){
           value={formData.password}
           type="password"
           onChange= {(e) => setFormData({ ...formData, password: e.target.value })}
+          className={classes.loginFields}
         />
         {props.variant === "register" ?
-          <Button fullWidth variant="contained" color="primary" onClick={handleRegister}>Register</Button>
+          <Button fullWidth className={classes.footerBtn} variant="contained" color="primary" onClick={handleRegister}>Register</Button>
           :
-          <Button fullWidth variant="contained" color="primary" onClick={handleLogin}>Login</Button>
+          <Button fullWidth className={classes.footerBtn} variant="contained" color="secondary" onClick={handleLogin}>Login</Button>
         }
       </form>
     </div>

@@ -206,6 +206,8 @@ function GoalThumbNail(props){
         <ThumbNailFooter
           doCreateGoal={props.doCreateGoal}
           doDeleteGoal={props.doDeleteGoal}
+          goalDisplayed={props.goalDisplayed}
+          setGoalSelected={props.setGoalSelected}
         />
       </div>
  
