@@ -30,7 +30,7 @@ function DashboardPage(props) {
       currentAmount: 0,
       riskTolerance: 3,
       cspAmount: 0,
-      progress: 1,
+      progress: 0.5,
     });
 
     const { goals, message } = await createGoal(goalPayload);

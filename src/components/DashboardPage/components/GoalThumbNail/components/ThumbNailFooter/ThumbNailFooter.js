@@ -43,7 +43,7 @@ function ThumbNailFooter(props){
                 <Grid item>
                   <Button
                     variant="contained"
-                    color="default"
+                    color="primary"
                     onClick={() => {
                       setOpenDelete(false);
                       props.doDeleteGoal();
@@ -53,7 +53,7 @@ function ThumbNailFooter(props){
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="primary" onClick={() => setOpenDelete(false)}>NO</Button>
+                  <Button variant="contained" color="default" onClick={() => setOpenDelete(false)}>NO</Button>
                 </Grid>
               </Grid>
             </Grid>
@@ -90,7 +90,7 @@ function ThumbNailFooter(props){
                 <Grid item>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="default"
                     onClick={() => setOpenCreate(false)}>
                     NO
                   </Button>
