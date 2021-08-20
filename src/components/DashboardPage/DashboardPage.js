@@ -22,9 +22,9 @@ function DashboardPage(props) {
     }
   }, [props.goals]);
 
-  async function doCreateGoal() {
+  async function doCreateGoal(name) {
     const goalPayload = ({
-      title: 'new goal',
+      title: name,
       targetAmount: 0,
       targetDate: new Date(),
       currentAmount: 0,
@@ -39,7 +39,8 @@ function DashboardPage(props) {
       await props.setGoals(goals);
 
       // set the focused goal to the last one (the one just created);
-      setGoalDisplayed(props.goals.length - 1);
+      setGoalDisplayed(goals.length - 1);
+      setGoalSelected(goals.length - 1);
     } else {
     }
   }

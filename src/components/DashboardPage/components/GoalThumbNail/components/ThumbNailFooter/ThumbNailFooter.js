@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogContentText, Button, Typography, Grid } from '@material-ui/core';
+import { Input, Dialog, DialogContent, DialogContentText, Button, Typography, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {useEffect, useState} from 'react';
 
@@ -16,6 +16,7 @@ function ThumbNailFooter(props){
   const classes = useStyles()
   const [openDelete, setOpenDelete] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
+  const [newGoalName, setNewGoalName] = useState("");
 
   // Only open if we have a callback
   function handleOpenDelete() {
@@ -70,9 +71,16 @@ function ThumbNailFooter(props){
       >
         <DialogContent>
           <DialogContentText>
-            <Grid container direction="column" spacing={2}>
+            <Grid container direction="column" spacing={3}>
               <Grid item>
-                <div>Would you like to create a new Goal?</div>
+                <div>Would you like to create a new Goal? Give it a name:</div>
+              </Grid>
+              <Grid item>
+                <Input
+                  fullWidth
+                  type="text"
+                  onChange={(e) => setNewGoalName(e.target.value)}
+                />
               </Grid>
               <Grid container justifyContent="space-around">
                 <Grid item>
@@ -81,10 +89,10 @@ function ThumbNailFooter(props){
                     color="primary"
                     onClick={() => {
                       setOpenCreate(false);
-                      props.doCreateGoal();
+                      props.doCreateGoal(newGoalName);
                     }}
                   >
-                    YES
+                    CREATE
                   </Button>
                 </Grid>
                 <Grid item>
@@ -92,7 +100,7 @@ function ThumbNailFooter(props){
                     variant="contained"
                     color="default"
                     onClick={() => setOpenCreate(false)}>
-                    NO
+                    CANCEL
                   </Button>
                 </Grid>
               </Grid>
