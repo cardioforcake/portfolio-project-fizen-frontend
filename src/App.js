@@ -20,7 +20,10 @@ const theme = createTheme({
       dark: '#033666'
     },
     secondary: {
-      main: '#c44747',
+      main: '#000000',
+    },
+    dark:{
+      main: 'black'
     }
   }
 });

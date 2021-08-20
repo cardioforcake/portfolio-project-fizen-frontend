@@ -142,10 +142,23 @@ const useStyles = makeStyles((theme)=>({
   },
   arrow:{
     width: '15%',
+    fontSize: '1rem',
+    color:'#505050'
   },
-  arrowBtn:{
+  backBtn:{
     width: '1rem',
     height: '2rem'
+  },
+  saveBtn:{
+    textAlign: 'right'
+  },
+  footerBtn:{
+    width: '100%',
+    borderRadius: '1rem',
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
+    fontSize: '1rem',
+    fontWeight: '500'
   }
 }))
 
@@ -284,15 +297,18 @@ function GoalDetails(props){
         <Grid item xs={12}>
           <div className={classes.hearderContainer}>
             <div className={classes.arrow}>
-              <div className={classes.arrowBtn} onClick={()=>props.setGoalSelect(null)}>
-                <img src="/leftArrow.svg" alt="Edit" height="100%" />
+              <div className={classes.backBtn} onClick={()=>props.setGoalSelect(null)}>
+                BACK
+                {/* <img src="/leftArrow.svg" alt="Edit" height="100%" /> */}
               </div>
             </div>
             <Typography className={classes.titleLabel}>
               {goalParams.title.toUpperCase()} 
             </Typography>
             <div className={classes.arrow}>
-              <div className={classes.arrowBtn}></div>
+              <div className={classes.saveBtn} onClick={()=>syncGoal()}>
+                SAVE
+              </div>
             </div>
           </div>
 
@@ -424,8 +440,10 @@ function GoalDetails(props){
                         <option value="5">High</option>
             </NativeSelect> */}
         </Grid>
-      <Button variant="contained" color="default" onClick={()=>props.setGoalSelect(null)}>Back</Button>
-      <Button variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
+        <Grid item xs={12}>
+          <Button className={classes.footerBtn} variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
+        </Grid>
+
       </Grid>
 
     </div>
