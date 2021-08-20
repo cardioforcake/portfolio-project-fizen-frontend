@@ -7,7 +7,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme)=>({
   titleLabel:{
-    width: '50%',
     fontSize: '1.5rem',
     fontWeight: '500',
     color: '#356895',
@@ -156,6 +155,14 @@ const useStyles = makeStyles((theme)=>({
     marginBottom: '0.5rem',
     fontSize: '1rem',
     fontWeight: '500'
+  },
+  headerBtn:{
+    width: '100%',
+    borderRadius: '1rem',
+    marginTop: '0',
+    marginBottom: '0.5rem',
+    fontSize: '1rem',
+    fontWeight: '500'
   }
 }))
 
@@ -256,17 +263,18 @@ function TutDetails(props){
     <div>
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <div className={classes.hearderContainer}>
-            <Typography className={classes.titleLabel}>
-              {props.tutParams.title.toUpperCase()} 
-            </Typography>
-          </div>
+          <Button 
+            className={classes.headerBtn} 
+            variant="contained" color="secondary" 
+            onClick={()=>{nextTut(props.setTutSec); updateCSP(props.tutParams, props.setTutParams)}}
+          >
+            Register & Save
+          </Button>
         </Grid>
         <Grid item xs={12}>
-            <Typography className={classes.progressText}>
-              Progress
-            </Typography>
-
+          <Typography className={classes.titleLabel}>
+            {props.tutParams.title.toUpperCase()} 
+          </Typography>
         </Grid>
         <Grid item xs={6}>
           <div>
@@ -364,7 +372,7 @@ function TutDetails(props){
               min={1}
               max={5}
               step={1}
-              defaultValue={props.goal.riskTolerance}
+              defaultValue={props.tutParams.riskTolerance}
               onChangeCommitted={(e, value)=>updateRisk(value, props.setTutParams)}
             />
           </div>
@@ -377,7 +385,13 @@ function TutDetails(props){
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Button className={classes.footerBtn} variant="contained" color="secondary" onClick={()=>syncGoal()}>Save</Button>
+          <Button 
+            className={classes.footerBtn} 
+            variant="contained" color="secondary" 
+            onClick={()=>{nextTut(props.setTutSec); updateCSP(props.tutParams, props.setTutParams)}}
+          >
+            Register & Save
+          </Button>
         </Grid>
 
       </Grid>
