@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, List, ListItem, Typography, Card } from '@material-ui/core';
+import { Grid, Button, List, ListItem, Typography, Card } from '@material-ui/core';
 import GoalDetails from './components/GoalDetails/GoalDetails'
 import GoalThumbNail from './components/GoalThumbNail/GoalThumbNail'
 import { createGoal, deleteGoal } from '../../utils/goals-api';
+import ThumbNailFooter from './components/GoalThumbNail/components/ThumbNailFooter/ThumbNailFooter';
+
 
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
@@ -54,7 +56,19 @@ function DashboardPage(props) {
 
   return(
     <div>{loading
-      ? <div>Loading Goals... maybe you don't have any yet?</div>
+      ? 
+      <div>
+        <Grid container direction="column" spacing={4} alignItems="center">
+          <Grid item>
+            <span>Loading Goals... maybe you don't have any yet?</span>
+          </Grid>
+          <Grid item>
+            <ThumbNailFooter
+              doCreateGoal={doCreateGoal}
+            />
+          </Grid>
+        </Grid>
+      </div>
       :
       <div>{(goalSelected === null)
         ?
