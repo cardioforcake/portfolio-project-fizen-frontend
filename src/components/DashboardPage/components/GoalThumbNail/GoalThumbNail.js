@@ -2,7 +2,7 @@ import { Button, Typography, Card,Slider } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ThumbNailFooter from './components/ThumbNailFooter/ThumbNailFooter'
 import {useState, useEffect} from 'react'
-
+import {showPrev, showNext} from '../../../../utils/utility-functions.js'
 
 const useStyles = makeStyles((theme)=>({
   goalTN:{
@@ -78,6 +78,19 @@ const useStyles = makeStyles((theme)=>({
   message:{
     fontSize: '1.1rem',
     color: 'black'
+  },
+  middleBlock:{
+    display: 'flex',
+  },
+  arrow:{
+    width: '15%',
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  arrowBtn:{
+    width: '1rem',
+    height: '2rem'
   }
 }))
 
@@ -142,32 +155,53 @@ function GoalThumbNail(props){
       <Typography className={classes.header}>
         MY GOALS
       </Typography>
-      <Card onClick={()=>{props.setGoalSelected(props.goalDisplayed);}} className={classes.goalTN}>
-        <div className={classes.title}>
-          <Typography className={classes.titleLabel}>
-            {props.title.toUpperCase()}
-          </Typography>
-          <Typography className={classes.message}>{message}</Typography>
+      <div className={classes.middleBlock}>
+        <div className={classes.arrow}>
+          {props.goalDisplayed>0 ? 
+            <div className={classes.arrowBtn} onClick={()=>{showPrev(props.setGoalDisplayed)}}>
+              <img src="/leftArrow.svg" alt="Edit" height="100%" />
+            </div>
+          :
+            <div></div>
+          }
         </div>
+        <Card onClick={()=>{props.setGoalSelected(props.goalDisplayed);}} className={classes.goalTN}>
+          <div className={classes.title}>
+            <Typography className={classes.titleLabel}>
+              {props.title.toUpperCase()}
+            </Typography>
+            <Typography className={classes.message}>{message}</Typography>
+          </div>
+          <div className={classes.sliderTN}>
+            <ThumbNailSlider 
+              min={0.5}
+              max={1.5}
+              orientation="vertical"
+              value={props.progress}
+              // marks={marks}
+            />
+          </div>
+          <div className={classes.balance}>
+            <Typography className={classes.balanceLabel}>
+              CURRENT BALANCE:
+            </Typography>
+            <Typography className={classes.balanceAmount}>
+              ${props.currentAmount}
+            </Typography>
+          </div>
+        </Card>
+        <div className={classes.arrow}>
+          {props.goalDisplayed<props.numGoals ?
+            <div className={classes.arrowBtn} onClick={()=>{showNext(props.setGoalDisplayed)}}>
+              <img src="/rightArrow.svg" alt="Edit" height="100%" />
+            </div>
+          :
+            <div></div>
+          }
 
-        <div className={classes.sliderTN}>
-          <ThumbNailSlider 
-            min={0.5}
-            max={1.5}
-            orientation="vertical"
-            value={props.progress}
-            // marks={marks}
-          />
         </div>
-        <div className={classes.balance}>
-          <Typography className={classes.balanceLabel}>
-            CURRENT BALANCE:
-          </Typography>
-          <Typography className={classes.balanceAmount}>
-            ${props.currentAmount}
-          </Typography>
-        </div>
-      </Card>
+      </div>
+      
       <div className={classes.footer}>
         <ThumbNailFooter
           doCreateGoal={props.doCreateGoal}

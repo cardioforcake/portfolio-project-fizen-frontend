@@ -7,7 +7,7 @@ import { createGoal, deleteGoal } from '../../utils/goals-api';
 
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
-  const [goalDisplayed, setGoalDisplayed] = useState(0)
+  const [goalDisplayed, setGoalDisplayed] = useState(1)
   // const [zoomedGoal, setZoomedGoal] = useState(null)
   const history = useHistory();
 
@@ -55,6 +55,8 @@ function DashboardPage(props) {
       <div>
         <GoalThumbNail
           goalDisplayed={goalDisplayed}
+          setGoalDisplayed={setGoalDisplayed}
+          numGoals={props.goals.length-1}
           goal={props.goals[goalDisplayed]}
           progress={props.goals[goalDisplayed].progress}
           title={props.goals[goalDisplayed].title}
