@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, Button, Typography, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 const useStyles = makeStyles((theme)=>({
   footerTN:{
@@ -17,9 +17,16 @@ function ThumbNailFooter(props){
   const [openDelete, setOpenDelete] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
 
+  // Only open if we have a callback
+  function handleOpenDelete() {
+    if (props.doDeleteGoal) {
+      setOpenDelete(true);
+    }
+  }
+
   return(
     <div className={classes.footerTN}>
-      <Button onClick={() => setOpenDelete(true)}>
+      <Button onClick={() => handleOpenDelete()}>
         <img src="/Trash.svg" alt="Delete" height="80%" />
       </Button>
       <Dialog
