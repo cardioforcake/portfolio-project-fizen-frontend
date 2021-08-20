@@ -8,8 +8,17 @@ import { createGoal, deleteGoal } from '../../utils/goals-api';
 function DashboardPage(props) {
   const [goalSelected, setGoalSelected] = useState(null);
   const [goalDisplayed, setGoalDisplayed] = useState(0)
+  const [loading, setLoading] = useState(true)
   // const [zoomedGoal, setZoomedGoal] = useState(null)
   const history = useHistory();
+
+  useEffect(() => {
+    if (props.goals.length > 0) {
+      setGoalDisplayed(0);
+      setGoalSelected(null);
+      setLoading(false);
+    }
+  }, [props.goals]);
 
   async function doCreateGoal() {
     const goalPayload = ({
@@ -19,7 +28,7 @@ function DashboardPage(props) {
       currentAmount: 0,
       riskTolerance: 3,
       cspAmount: 0,
-      progress: 0.5,
+      progress: 1,
     });
 
     const { goals, message } = await createGoal(goalPayload);
@@ -38,47 +47,46 @@ function DashboardPage(props) {
     // TODO handle message
 
     if (goals) {
+      setLoading(true);
       await props.setGoals(goals);
-
-      // set the focused goal to the last one, else null
-      const newGoalDisplayed = props.goals.length - 1;
-      if (newGoalDisplayed >= 0) {
-        setGoalDisplayed(newGoalDisplayed);
-      } else {
-        setGoalDisplayed(null);
-      }
     }
   }
 
-  if(goalSelected===null){
-    return(
-      <div>
-        <GoalThumbNail
-          goalDisplayed={goalDisplayed}
-          setGoalDisplayed={setGoalDisplayed}
-          numGoals={props.goals.length-1}
-          goal={props.goals[goalDisplayed]}
-          progress={props.goals[goalDisplayed].progress}
-          title={props.goals[goalDisplayed].title}
-          currentAmount={props.goals[goalDisplayed].currentAmount}
-          setGoalSelected={setGoalSelected}
-          doCreateGoal={doCreateGoal}
-          doDeleteGoal={doDeleteGoal}
-        />
+  return(
+    <div>{loading
+      ? <div>Loading Goals... maybe you don't have any yet?</div>
+      :
+      <div>{(goalSelected === null)
+        ?
+        <div>
+          <GoalThumbNail
+            goalDisplayed={goalDisplayed}
+            setGoalDisplayed={setGoalDisplayed}
+            numGoals={props.goals.length-1}
+            goal={props.goals[goalDisplayed]}
+            progress={props.goals[goalDisplayed].progress}
+            title={props.goals[goalDisplayed].title}
+            currentAmount={props.goals[goalDisplayed].currentAmount}
+            setGoalSelected={setGoalSelected}
+            doCreateGoal={doCreateGoal}
+            doDeleteGoal={doDeleteGoal}
+          />
+        </div>
+        :
+        <div>
+          <GoalDetails
+            setGoals={props.setGoals}
+            loadGoals={props.loadGoals}
+            goal={props.goals[goalSelected]}
+            setGoalSelect={setGoalSelected}
+          />
+        </div>
+        }
       </div>
-    )
-  }else{
-    return(
-      <div>
-        <GoalDetails
-          setGoals={props.setGoals}
-          loadGoals={props.loadGoals}
-          goal={props.goals[goalSelected]}
-          setGoalSelect={setGoalSelected}
-        />
-      </div>
-    )
-  }
+      }
+    </div>
+  );
+}
   // return (
   //   <div>
 
@@ -118,6 +126,5 @@ function DashboardPage(props) {
   //     }
   //   </div>
   // );
-}
 
 export default DashboardPage
