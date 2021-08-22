@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme)=>({
   },
   targetLabel:{
     color: '#356895',
-    fontSize: '1rem',g
+    fontSize: '1rem',
     fontWeight: '400',
     marginTop: '0.3rem'
   },
@@ -422,13 +422,6 @@ function GoalDetails(props){
           <Typography className={classes.riskDesc}>
             {riskReturn[goalParams.riskTolerance-1]}
           </Typography>
-          {/* <NativeSelect value={goalParams.riskTolerance} onChange={(e)=>updateRisk(e.target.value, setGoalParams)}>
-                        <option value="1">Low</option>
-                        <option value="2">Low to Medium</option>
-                        <option value="3">Medium</option>
-                        <option value="4">Medium to High</option>
-                        <option value="5">High</option>
-            </NativeSelect> */}
         </Grid>
         <Grid item xs={12}>
           <Button className={classes.footerBtn} variant="contained" color="primary" onClick={()=>syncGoal()}>Save</Button>
