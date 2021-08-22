@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme)=>({
   },
   targetLabel:{
     color: '#356895',
-    fontSize: '1rem',
+    fontSize: '1rem',g
     fontWeight: '400',
     marginTop: '0.3rem'
   },
