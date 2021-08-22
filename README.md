@@ -7,16 +7,16 @@ Personal Financial Planning Assistant Web App Optimized for mobile. MERN stack p
 Runner Up/Special Mention
 -awarded based on design, execution and polish
 
-[Deloyed Site](http://taganov.net:2015/)
+[Deloyed Project](http://taganov.net:2015/)
 
 ### Contributors:
 #### Devs
--Stan Chao (me) [LinkedIn](https://www.linkedin.com/in/stan-chao-dev/) -Project Lead/Manager & Front-end incl. styling
-Yuriy Taganov [LinkedIn](https://www.linkedin.com/in/yuriy-yashkir/) - User authentication & back-end server incl. database management
+-Stan Chao (me) [LinkedIn](https://www.linkedin.com/in/stan-chao-dev/) - Project Lead/Manager & Front-end incl. styling
+-Yuriy Taganov [LinkedIn](https://www.linkedin.com/in/yuriy-yashkir/) - User authentication & back-end server incl. database management
 #### UX - Research & Design
-Andrew Sato-Li [LinkedIn](https://www.linkedin.com/in/andrew-sato-li/)
-Pallavi Deshpande [LinkedIn](https://www.linkedin.com/in/pallavi-deshpandes/)
-Branko Lalic [LinkedIn](https://www.linkedin.com/in/brankolalic/)
+-Andrew Sato-Li [LinkedIn](https://www.linkedin.com/in/andrew-sato-li/)
+-Pallavi Deshpande [LinkedIn](https://www.linkedin.com/in/pallavi-deshpandes/)
+-Branko Lalic [LinkedIn](https://www.linkedin.com/in/brankolalic/)
 
 ### Development Technology Used
 - MongoDB
