@@ -1,33 +1,53 @@
-function calcCSP(params){
-  let rates = [0, 0.02, 0.04, 0.06, 0.075, 0.095]
-  let today = new Date()
-  let timeHorizonYrs = Math.abs(params.targetDate - today)*12/(1000*60*60*24*365.25)
-  let compoundI = Math.pow((1+ (rates[params.riskTolerance]/12)), (timeHorizonYrs))
-  let fValueCurr = params.currentAmount * compoundI
-  let cspAmount = Math.ceil((params.targetAmount - fValueCurr) / (((compoundI-1)/(rates[params.riskTolerance]/12))*(1+(rates[params.riskTolerance]/12))))
-  return cspAmount
+const MILLISECONDS_IN_YEAR = 1000 * 60 * 60 * 24 * 365.25;
+const RATES = [0, 0.02, 0.04, 0.06, 0.075, 0.095];
+
+function compoundInterest(targetDate, riskTolerance) {
+  const today = new Date();
+  const timeHorizonYrs = Math.abs(targetDate - today) * 12 / MILLISECONDS_IN_YEAR;
+
+  return Math.pow((1 + (RATES[riskTolerance] / 12)), timeHorizonYrs);
 }
 
-function calcProgress(params){
-  let rates = [0, 0.02, 0.04, 0.06, 0.075, 0.095]
-  let today = new Date()
-  let timeHorizonYrs = Math.abs(params.targetDate - today)*12/(1000*60*60*24*365.25).toFixed(2)
-  let compoundI = Math.pow((1+ (rates[params.riskTolerance]/12)), (timeHorizonYrs))
-  let fValueCSP = params.cspAmount*((compoundI-1)/(rates[params.riskTolerance]/12))*(1+(rates[params.riskTolerance]/12))
-  let fValueCurr = params.currentAmount * compoundI
-  return ((fValueCSP + fValueCurr)/params.targetAmount).toFixed(3)
+function calcCSP(params) {
+  const compoundI = compoundInterest(params.targetDate, params.riskTolerance);
+
+  const fValueCurr = params.currentAmount * compoundI;
+  const cspAmount = Math.ceil(
+    (params.targetAmount - fValueCurr) / (
+      ((compoundI - 1) / (RATES[params.riskTolerance] / 12)) *
+      (1 + (RATES[params.riskTolerance] / 12))
+    )
+  );
+
+  return cspAmount;
 }
 
-function calcNewCSP(params, progress){
-  let rates = [0, 0.02, 0.04, 0.06, 0.075, 0.095]
-  let today = new Date()
-  let timeHorizonYrs = Math.abs(params.targetDate - today)*12/(1000*60*60*24*365.25).toFixed(2)
-  let compoundI = Math.pow((1+ (rates[params.riskTolerance]/12)), (timeHorizonYrs))
-  let fValueCurr = params.currentAmount * compoundI
-  let requiredFVCSP = progress*params.targetAmount - fValueCurr
-  let pValueCSP = Math.ceil(requiredFVCSP/((compoundI-1)/(rates[params.riskTolerance]/12))*(1+(rates[params.riskTolerance]/12)))
+function calcProgress(params) {
+  const compoundI = compoundInterest(params.targetDate, params.riskTolerance);
 
-  return pValueCSP
+  const fValueCSP =
+    params.cspAmount *
+    ((compoundI - 1) / (RATES[params.riskTolerance]/12)) *
+    (1 + (RATES[params.riskTolerance] / 12));
+  const fValueCurr = params.currentAmount * compoundI;
+
+  return ((fValueCSP + fValueCurr)/params.targetAmount).toFixed(3);
 }
 
-export {calcCSP, calcProgress, calcNewCSP}
+function calcNewCSP(params, progress) {
+  const compoundI = compoundInterest(params.targetDate, params.riskTolerance);
+
+  const fValueCurr = params.currentAmount * compoundI;
+  const requiredFVCSP = progress * params.targetAmount - fValueCurr;
+  const pValueCSP = Math.ceil(
+    requiredFVCSP /
+    (
+      ((compoundI - 1) / (RATES[params.riskTolerance] / 12)) *
+      (1 + (RATES[params.riskTolerance] / 12))
+    )
+  );
+
+  return pValueCSP;
+}
+
+export {calcCSP, calcProgress, calcNewCSP};
